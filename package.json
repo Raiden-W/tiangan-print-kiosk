@@ -1,0 +1,49 @@
+{
+  "name": "tiangan-print-kiosk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline Windows touch kiosk for day-stem discovery and fortune bead experiences.",
+  "author": "Raiden-W",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "electron/main.js",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite",
+    "dev:electron": "node scripts/dev.mjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "electron .",
+    "start:kiosk": "electron . --kiosk",
+    "lint": "eslint . --max-warnings 0",
+    "test": "node --test tests/*.test.js",
+    "pack:win": "node scripts/package-windows.mjs --dir",
+    "dist:win": "node scripts/package-windows.mjs"
+  },
+  "dependencies": {
+    "lunar-javascript": "1.7.7",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@vitejs/plugin-react": "6.1.2",
+    "electron": "45.0.0",
+    "electron-builder": "26.15.3",
+    "eslint": "10.13.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.7",
+    "globals": "17.13.0",
+    "vite": "8.3.5"
+  },
+  "build": {
+    "appId": "com.b1ock.tianganprintkiosk",
+    "productName": "Tiangan Print Kiosk",
+    "directories": { "output": "release" },
+    "files": ["dist/**/*", "electron/**/*", "shared/**/*", "content/**/*", "package.json"],
+    "asar": true,
+    "win": { "target": ["nsis"], "signAndEditExecutable": false },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true }
+  }
+}

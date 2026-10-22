@@ -1,0 +1,23 @@
+{
+  "mode": "sample",
+  "countries": [
+    { "id": "CN", "name": "中国", "cities": [
+      { "id": "shanghai", "name": "上海", "timezone": "Asia/Shanghai" },
+      { "id": "beijing", "name": "北京", "timezone": "Asia/Shanghai" },
+      { "id": "guangzhou", "name": "广州", "timezone": "Asia/Shanghai" },
+      { "id": "chengdu", "name": "成都", "timezone": "Asia/Shanghai" }
+    ] },
+    { "id": "JP", "name": "日本", "cities": [{ "id": "tokyo", "name": "东京", "timezone": "Asia/Tokyo" }] },
+    { "id": "SG", "name": "新加坡", "cities": [{ "id": "singapore", "name": "新加坡", "timezone": "Asia/Singapore" }] },
+    { "id": "GB", "name": "英国", "cities": [{ "id": "london", "name": "伦敦", "timezone": "Europe/London" }] },
+    { "id": "US", "name": "美国", "cities": [
+      { "id": "new-york", "name": "纽约", "timezone": "America/New_York" },
+      { "id": "los-angeles", "name": "洛杉矶", "timezone": "America/Los_Angeles" }
+    ] }
+  ],
+  "timezones": [
+    "Asia/Shanghai", "Asia/Hong_Kong", "Asia/Tokyo", "Asia/Singapore", "Asia/Seoul", "Asia/Kolkata",
+    "Europe/London", "Europe/Paris", "Europe/Berlin", "America/New_York", "America/Chicago",
+    "America/Los_Angeles", "Australia/Sydney", "Pacific/Auckland", "Etc/UTC"
+  ]
+}

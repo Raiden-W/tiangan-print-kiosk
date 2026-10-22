@@ -1,0 +1,27 @@
+{
+  "version": "placeholder-1",
+  "mode": "placeholder",
+  "stems": {
+    "甲": { "element": "木", "nameZh": "甲木", "nameEn": "YANG WOOD" },
+    "乙": { "element": "木", "nameZh": "乙木", "nameEn": "YIN WOOD" },
+    "丙": { "element": "火", "nameZh": "丙火", "nameEn": "YANG FIRE" },
+    "丁": { "element": "火", "nameZh": "丁火", "nameEn": "YIN FIRE" },
+    "戊": { "element": "土", "nameZh": "戊土", "nameEn": "YANG EARTH" },
+    "己": { "element": "土", "nameZh": "己土", "nameEn": "YIN EARTH" },
+    "庚": { "element": "金", "nameZh": "庚金", "nameEn": "YANG METAL" },
+    "辛": { "element": "金", "nameZh": "辛金", "nameEn": "YIN METAL" },
+    "壬": { "element": "水", "nameZh": "壬水", "nameEn": "YANG WATER" },
+    "癸": { "element": "水", "nameZh": "癸水", "nameEn": "YIN WATER" }
+  },
+  "beads": {
+    "demo-bead": {
+      "name": "测试串珠 A",
+      "image": null,
+      "meaning": "此处为开发占位说明。正式串珠名称、图片、对应关系及文化寓意待业主提供；当前不代表正式推荐。"
+    }
+  },
+  "assignments": {
+    "甲": "demo-bead", "乙": "demo-bead", "丙": "demo-bead", "丁": "demo-bead", "戊": "demo-bead",
+    "己": "demo-bead", "庚": "demo-bead", "辛": "demo-bead", "壬": "demo-bead", "癸": "demo-bead"
+  }
+}
