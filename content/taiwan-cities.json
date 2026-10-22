@@ -1,0 +1,28 @@
+{
+  "source": "https://www.president.gov.tw/Page/106",
+  "note": "台湾地区22县市。ID是应用内部标识，不冒充官方行政区划代码。",
+  "cities": [
+    { "id": "TW-taipei", "name": "台北市", "aliases": ["臺北市"] },
+    { "id": "TW-new-taipei", "name": "新北市" },
+    { "id": "TW-taoyuan", "name": "桃园市", "aliases": ["桃園市"] },
+    { "id": "TW-taichung", "name": "台中市", "aliases": ["臺中市"] },
+    { "id": "TW-tainan", "name": "台南市", "aliases": ["臺南市"] },
+    { "id": "TW-kaohsiung", "name": "高雄市" },
+    { "id": "TW-keelung", "name": "基隆市" },
+    { "id": "TW-hsinchu-city", "name": "新竹市" },
+    { "id": "TW-chiayi-city", "name": "嘉义市", "aliases": ["嘉義市"] },
+    { "id": "TW-hsinchu-county", "name": "新竹县", "aliases": ["新竹縣"] },
+    { "id": "TW-miaoli", "name": "苗栗县", "aliases": ["苗栗縣"] },
+    { "id": "TW-changhua", "name": "彰化县", "aliases": ["彰化縣"] },
+    { "id": "TW-nantou", "name": "南投县", "aliases": ["南投縣"] },
+    { "id": "TW-yunlin", "name": "云林县", "aliases": ["雲林縣"] },
+    { "id": "TW-chiayi-county", "name": "嘉义县", "aliases": ["嘉義縣"] },
+    { "id": "TW-pingtung", "name": "屏东县", "aliases": ["屏東縣"] },
+    { "id": "TW-yilan", "name": "宜兰县", "aliases": ["宜蘭縣"] },
+    { "id": "TW-hualien", "name": "花莲县", "aliases": ["花蓮縣"] },
+    { "id": "TW-taitung", "name": "台东县", "aliases": ["臺東縣"] },
+    { "id": "TW-penghu", "name": "澎湖县", "aliases": ["澎湖縣"] },
+    { "id": "TW-kinmen", "name": "金门县", "aliases": ["金門縣"] },
+    { "id": "TW-lienchiang", "name": "连江县", "aliases": ["連江縣"] }
+  ]
+}

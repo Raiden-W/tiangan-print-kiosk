@@ -1,5 +1,7 @@
 # Project instructions
 
+- Do not push to GitHub automatically. Push only when the user explicitly requests it for the current work.
+
 - This repository is the application root. Keep project files here; do not write into the parent `brief/` directory.
 - Use Electron + React + Vite and JavaScript/JSX. Do not introduce TypeScript, remote services, a database, AI APIs, or a global state framework without a concrete requirement.
 - Preserve the three-page flow and supplied copy. The visual styling is provisional.

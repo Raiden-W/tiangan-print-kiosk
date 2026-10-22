@@ -1,0 +1,68 @@
+/* Theme surface: change these tokens for the final kiosk design. No vendor theme required. */
+.nickname-keyboard {
+  --keyboard-background: #edece3;
+  --keyboard-key-background: #fbfaf6;
+  --keyboard-function-background: #dde2d6;
+  --keyboard-text: #243c31;
+  --keyboard-accent: #243c31;
+  --keyboard-border: #b9c4b3;
+  --keyboard-radius: 6px;
+  --keyboard-gap: 8px;
+  --keyboard-key-height: 54px;
+  --keyboard-key-font: 21px;
+  color: var(--keyboard-text);
+  background: var(--keyboard-background);
+  border: 1px solid var(--keyboard-border);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -10px 48px #16281e33;
+  width: min(1040px, 100%);
+  max-width: 100%;
+  max-height: calc(100dvh - 12px);
+  inset: auto 0 0;
+  margin: auto auto 0;
+  padding: 16px 24px max(12px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.nickname-keyboard::backdrop { background: #18291f55; }
+body:has(.nickname-keyboard[open]) { overflow: hidden; }
+.nickname-input-row { display: flex; gap: 8px; }
+.nickname-input-row input { min-width: 0; }
+.nickname-keyboard-trigger { flex-shrink: 0; min-width: 64px; min-height: 56px; border: 1px solid #c8cdc3; border-radius: 2px; background: #e4e8dc; color: #243c31; }
+.keyboard-toolbar { display: flex; gap: 16px; align-items: center; margin-bottom: 10px; }
+.keyboard-toolbar h2 { margin: 0 auto 0 0; font-size: 18px; font-weight: 500; }
+.keyboard-languages { display: flex; gap: 6px; }
+.nickname-keyboard button { min-height: 48px; border: 1px solid var(--keyboard-border); border-radius: var(--keyboard-radius); background: var(--keyboard-key-background); color: var(--keyboard-text); padding: 8px 14px; touch-action: manipulation; }
+.nickname-keyboard button:hover:not(:disabled) { filter: brightness(.96); }
+.nickname-keyboard .keyboard-done, .keyboard-languages button[aria-pressed='true'] { background: var(--keyboard-accent); color: var(--keyboard-key-background); }
+.keyboard-done { min-width: 88px; }
+.keyboard-input-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+.nickname-keyboard input { font-size: 21px; min-height: 56px; border-color: var(--keyboard-border); border-radius: var(--keyboard-radius); color: var(--keyboard-text); background: var(--keyboard-key-background); }
+.keyboard-composition { display: flex; align-items: center; gap: 10px; min-height: 48px; font-size: 13px; }
+.keyboard-composition > span { flex: 1; overflow-wrap: anywhere; }
+.keyboard-composition button { border: 0; background: transparent; font-size: 13px; }
+.keyboard-candidates { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; min-height: 50px; }
+.keyboard-candidates > button { padding: 4px 12px; font-size: 25px; }
+.keyboard-candidate-list { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: var(--keyboard-gap); flex: 1; min-width: 0; }
+.keyboard-candidate-list button { padding: 6px 2px; font-size: 24px; }
+.keyboard-candidate-page { width: 40px; text-align: center; font-size: 12px; }
+.kiosk-keyboard-keys { width: 100%; user-select: none; -webkit-user-select: none; }
+.kiosk-keyboard-keys .hg-row { display: flex; gap: var(--keyboard-gap); margin-bottom: var(--keyboard-gap); }
+.nickname-keyboard .kiosk-keyboard-keys .hg-button { display: flex; align-items: center; justify-content: center; flex: 1; min-width: 0; height: var(--keyboard-key-height); min-height: var(--keyboard-key-height); padding: 2px; font-size: var(--keyboard-key-font); }
+.nickname-keyboard .kiosk-keyboard-keys .keyboard-key-function { background: var(--keyboard-function-background); font-size: 16px; }
+.kiosk-keyboard-keys .hg-button span { pointer-events: none; }
+.nickname-keyboard .kiosk-keyboard-keys [data-skbtn='{space}'] { flex: 4; }
+.nickname-keyboard .kiosk-keyboard-keys .hg-activeButton { background: var(--keyboard-accent); color: var(--keyboard-key-background); }
+.keyboard-status { min-height: 20px; margin: 6px 0 0; font-size: 12px; line-height: 1.6; }
+@media (max-width: 600px) {
+  .nickname-keyboard { --keyboard-gap: 4px; --keyboard-key-height: 48px; --keyboard-key-font: 18px; padding: 12px 8px; }
+  .keyboard-toolbar { gap: 6px; }
+  .keyboard-toolbar h2 { font-size: 15px; }
+  .keyboard-languages { gap: 4px; }
+  .keyboard-toolbar button { padding: 8px; font-size: 13px; }
+  .keyboard-done { min-width: 56px; }
+  .keyboard-candidates { gap: 4px; }
+  .keyboard-candidate-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .keyboard-candidate-page { width: 32px; }
+  .nickname-keyboard .kiosk-keyboard-keys .keyboard-key-function { font-size: 13px; }
+}

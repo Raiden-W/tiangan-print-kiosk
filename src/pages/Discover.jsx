@@ -1,4 +1,5 @@
 import LocationFields from '../components/LocationFields.jsx'
+import NicknameField from '../components/NicknameField.jsx'
 import { localToday, MIN_BIRTH_DATE } from '../../shared/date.js'
 import locations from '../../content/locations.json'
 
@@ -12,14 +13,7 @@ export default function Discover({ participant: form, errors, onChange, onSubmit
       <h1 className="page-title" id="discover-title">填写出生信息，<br />探索属于你的天干与幸运串珠。</h1>
       <p className="form-note">昵称与出生日期为必填项，其余选填。本次仅使用公历出生日期计算日干。</p>
       <form className="discovery-form" autoComplete="off" noValidate onSubmit={(event) => { event.preventDefault(); onSubmit() }}>
-        <div className="field">
-          <label htmlFor="nickname"><span className="field-number">01</span>昵称 <span className="required">*</span></label>
-          <input id="nickname" name="nickname" value={form.nickname} placeholder="怎么称呼你？" maxLength={48}
-            spellCheck={false} autoComplete="off" aria-required="true" aria-invalid={Boolean(errors.nickname)}
-            aria-describedby={errors.nickname ? 'nickname-error' : undefined}
-            onChange={(event) => onChange({ nickname: event.target.value })} />
-          {errors.nickname && <p className="field-error" id="nickname-error">{errors.nickname}</p>}
-        </div>
+        <NicknameField value={form.nickname} error={errors.nickname} onChange={(nickname) => onChange({ nickname })} />
         <fieldset className="field gender-field">
           <legend><span className="field-number">02</span>性别 <span className="optional">选填</span></legend>
           <div className="gender-options">{['男', '女'].map((gender) => <label className="choice" key={gender}>
@@ -48,14 +42,14 @@ export default function Discover({ participant: form, errors, onChange, onSubmit
         </fieldset>
         <fieldset className="field">
           <legend><span className="field-number">05</span>出生地点 <span className="optional">选填</span></legend>
-          <LocationFields prefix="出生地" country={form.birthCountry} city={form.birthCity}
-            onChange={(birthCountry, birthCity, birthTimezone) => onChange({ birthCountry, birthCity, birthTimezone })} />
+          <LocationFields prefix="出生地" country={form.birthCountry} province={form.birthProvince} city={form.birthCity}
+            onChange={({ country, province, city, timezone }) => onChange({ birthCountry: country, birthProvince: province, birthCity: city, birthTimezone: timezone })} />
           {errors.birthPlace && <p className="field-error">{errors.birthPlace}</p>}
         </fieldset>
         <fieldset className="field">
           <legend><span className="field-number">06</span>现居地 <span className="optional">选填</span></legend>
-          <LocationFields prefix="现居地" country={form.residenceCountry} city={form.residenceCity}
-            onChange={(residenceCountry, residenceCity) => onChange({ residenceCountry, residenceCity })} />
+          <LocationFields prefix="现居地" country={form.residenceCountry} province={form.residenceProvince} city={form.residenceCity}
+            onChange={({ country, province, city }) => onChange({ residenceCountry: country, residenceProvince: province, residenceCity: city })} />
           {errors.residence && <p className="field-error">{errors.residence}</p>}
         </fieldset>
         <div className="field timezone-field">
@@ -64,7 +58,7 @@ export default function Discover({ participant: form, errors, onChange, onSubmit
             <option value="">选择城市后自动建议，也可手动选择</option>
             {locations.timezones.map((timezone) => <option key={timezone} value={timezone}>{timezone}</option>)}
           </select>
-          <p className="field-hint">时区仅作信息收集，不修正出生日期。地点选项暂为示例城市。</p>
+          <p className="field-hint">根据出生地点建议时区，可手动调整；不修正出生日期。当前地点索引仅开放中国。</p>
         </div>
         {Object.keys(errors).length > 0 && <p className="form-error" role="alert">{errors.form || '请检查上方标出的信息后再试。'}</p>}
         <div className="form-actions"><button type="button" className="button secondary" onClick={onBack}>返回</button>

@@ -26,6 +26,17 @@
 .required { color: #aa5a3e; margin-left: 4px; }
 .optional { font-size: 11px; color: #879281; margin-left: 8px; }
 .input-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.location-search { display: flex; gap: 8px; margin-bottom: 10px; }
+.location-search input { min-width: 0; }
+.location-search .clear-choice { flex-shrink: 0; }
+.location-selects { display: grid; grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.location-results { margin-bottom: 12px; }
+.location-results > p { margin: 0 0 6px; }
+.location-results ul { list-style: none; padding: 0; margin: 0; max-height: 264px; overflow-y: auto; border: 1px solid #c8cdc3; overscroll-behavior: contain; }
+.location-results ul:empty { border: 0; }
+.location-results button { display: block; width: 100%; min-height: 56px; padding: 12px; border: 0; border-bottom: 1px solid #dce0d5; background: #fbfaf6; color: #243c31; text-align: left; overflow-wrap: anywhere; font-size: 14px; line-height: 1.6; }
+.location-results button:hover { background: #e4e8dc; }
+@media (max-width: 1000px) { .location-selects { grid-template-columns: 1fr 1fr; } .location-selects select:first-child { grid-column: 1 / -1; } }
 .gender-options { display: flex; gap: 10px; align-items: center; }
 .choice { position: relative; flex: 1; cursor: pointer; }
 .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; min-height: 0; padding: 0; }

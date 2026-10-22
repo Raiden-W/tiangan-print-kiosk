@@ -1,23 +1,2312 @@
 {
-  "mode": "sample",
+  "schemaVersion": 2,
+  "snapshotDate": "2026-10-22",
+  "source": {
+    "name": "中国国家地名信息库",
+    "url": "https://dmfw.mca.gov.cn/9095/xzqh/getList?maxLevel=2",
+    "sha256": "9d3b5803e8201703d957dd67f61c68cd98be16a2151906a1929a79a21b8e5862",
+    "year": null,
+    "note": "服务默认最新返回版本，未返回明确年版；snapshotDate是抓取日期，不代表法定区划生效日期。台湾县市按独立来源补充，TW-前缀为应用内部ID。",
+    "supplements": [
+      "https://www.president.gov.tw/Page/106"
+    ]
+  },
+  "counts": {
+    "provinces": 34,
+    "prefectures": 333,
+    "municipalities": 4,
+    "provinceDirect": 33,
+    "specialRegions": 2,
+    "taiwanCountyCities": 22,
+    "selectableCities": 394
+  },
   "countries": [
-    { "id": "CN", "name": "中国", "cities": [
-      { "id": "shanghai", "name": "上海", "timezone": "Asia/Shanghai" },
-      { "id": "beijing", "name": "北京", "timezone": "Asia/Shanghai" },
-      { "id": "guangzhou", "name": "广州", "timezone": "Asia/Shanghai" },
-      { "id": "chengdu", "name": "成都", "timezone": "Asia/Shanghai" }
-    ] },
-    { "id": "JP", "name": "日本", "cities": [{ "id": "tokyo", "name": "东京", "timezone": "Asia/Tokyo" }] },
-    { "id": "SG", "name": "新加坡", "cities": [{ "id": "singapore", "name": "新加坡", "timezone": "Asia/Singapore" }] },
-    { "id": "GB", "name": "英国", "cities": [{ "id": "london", "name": "伦敦", "timezone": "Europe/London" }] },
-    { "id": "US", "name": "美国", "cities": [
-      { "id": "new-york", "name": "纽约", "timezone": "America/New_York" },
-      { "id": "los-angeles", "name": "洛杉矶", "timezone": "America/Los_Angeles" }
-    ] }
+    {
+      "id": "CN",
+      "name": "中国",
+      "provinces": [
+        {
+          "id": "110000",
+          "name": "北京市",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "110000",
+              "name": "北京市",
+              "type": "municipality"
+            }
+          ]
+        },
+        {
+          "id": "120000",
+          "name": "天津市",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "120000",
+              "name": "天津市",
+              "type": "municipality"
+            }
+          ]
+        },
+        {
+          "id": "130000",
+          "name": "河北省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "130100",
+              "name": "石家庄市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130200",
+              "name": "唐山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130300",
+              "name": "秦皇岛市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130400",
+              "name": "邯郸市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130500",
+              "name": "邢台市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130600",
+              "name": "保定市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130700",
+              "name": "张家口市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130800",
+              "name": "承德市",
+              "type": "prefecture"
+            },
+            {
+              "id": "130900",
+              "name": "沧州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "131000",
+              "name": "廊坊市",
+              "type": "prefecture"
+            },
+            {
+              "id": "131100",
+              "name": "衡水市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "140000",
+          "name": "山西省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "140100",
+              "name": "太原市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140200",
+              "name": "大同市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140300",
+              "name": "阳泉市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140400",
+              "name": "长治市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140500",
+              "name": "晋城市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140600",
+              "name": "朔州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140700",
+              "name": "晋中市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140800",
+              "name": "运城市",
+              "type": "prefecture"
+            },
+            {
+              "id": "140900",
+              "name": "忻州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "141000",
+              "name": "临汾市",
+              "type": "prefecture"
+            },
+            {
+              "id": "141100",
+              "name": "吕梁市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "150000",
+          "name": "内蒙古自治区",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "150100",
+              "name": "呼和浩特市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150200",
+              "name": "包头市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150300",
+              "name": "乌海市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150400",
+              "name": "赤峰市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150500",
+              "name": "通辽市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150600",
+              "name": "鄂尔多斯市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150700",
+              "name": "呼伦贝尔市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150800",
+              "name": "巴彦淖尔市",
+              "type": "prefecture"
+            },
+            {
+              "id": "150900",
+              "name": "乌兰察布市",
+              "type": "prefecture"
+            },
+            {
+              "id": "152200",
+              "name": "兴安盟",
+              "type": "prefecture"
+            },
+            {
+              "id": "152500",
+              "name": "锡林郭勒盟",
+              "type": "prefecture"
+            },
+            {
+              "id": "152900",
+              "name": "阿拉善盟",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "210000",
+          "name": "辽宁省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "210100",
+              "name": "沈阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210200",
+              "name": "大连市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210300",
+              "name": "鞍山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210400",
+              "name": "抚顺市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210500",
+              "name": "本溪市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210600",
+              "name": "丹东市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210700",
+              "name": "锦州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210800",
+              "name": "营口市",
+              "type": "prefecture"
+            },
+            {
+              "id": "210900",
+              "name": "阜新市",
+              "type": "prefecture"
+            },
+            {
+              "id": "211000",
+              "name": "辽阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "211100",
+              "name": "盘锦市",
+              "type": "prefecture"
+            },
+            {
+              "id": "211200",
+              "name": "铁岭市",
+              "type": "prefecture"
+            },
+            {
+              "id": "211300",
+              "name": "朝阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "211400",
+              "name": "葫芦岛市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "220000",
+          "name": "吉林省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "220100",
+              "name": "长春市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220200",
+              "name": "吉林市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220300",
+              "name": "四平市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220400",
+              "name": "辽源市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220500",
+              "name": "通化市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220600",
+              "name": "白山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220700",
+              "name": "松原市",
+              "type": "prefecture"
+            },
+            {
+              "id": "220800",
+              "name": "白城市",
+              "type": "prefecture"
+            },
+            {
+              "id": "222400",
+              "name": "延边朝鲜族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "230000",
+          "name": "黑龙江省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "230100",
+              "name": "哈尔滨市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230200",
+              "name": "齐齐哈尔市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230300",
+              "name": "鸡西市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230400",
+              "name": "鹤岗市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230500",
+              "name": "双鸭山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230600",
+              "name": "大庆市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230700",
+              "name": "伊春市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230800",
+              "name": "佳木斯市",
+              "type": "prefecture"
+            },
+            {
+              "id": "230900",
+              "name": "七台河市",
+              "type": "prefecture"
+            },
+            {
+              "id": "231000",
+              "name": "牡丹江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "231100",
+              "name": "黑河市",
+              "type": "prefecture"
+            },
+            {
+              "id": "231200",
+              "name": "绥化市",
+              "type": "prefecture"
+            },
+            {
+              "id": "232700",
+              "name": "大兴安岭地区",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "310000",
+          "name": "上海市",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "310000",
+              "name": "上海市",
+              "type": "municipality"
+            }
+          ]
+        },
+        {
+          "id": "320000",
+          "name": "江苏省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "320100",
+              "name": "南京市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320200",
+              "name": "无锡市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320300",
+              "name": "徐州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320400",
+              "name": "常州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320500",
+              "name": "苏州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320600",
+              "name": "南通市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320700",
+              "name": "连云港市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320800",
+              "name": "淮安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "320900",
+              "name": "盐城市",
+              "type": "prefecture"
+            },
+            {
+              "id": "321000",
+              "name": "扬州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "321100",
+              "name": "镇江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "321200",
+              "name": "泰州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "321300",
+              "name": "宿迁市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "330000",
+          "name": "浙江省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "330100",
+              "name": "杭州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330200",
+              "name": "宁波市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330300",
+              "name": "温州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330400",
+              "name": "嘉兴市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330500",
+              "name": "湖州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330600",
+              "name": "绍兴市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330700",
+              "name": "金华市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330800",
+              "name": "衢州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "330900",
+              "name": "舟山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "331000",
+              "name": "台州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "331100",
+              "name": "丽水市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "340000",
+          "name": "安徽省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "340100",
+              "name": "合肥市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340200",
+              "name": "芜湖市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340300",
+              "name": "蚌埠市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340400",
+              "name": "淮南市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340500",
+              "name": "马鞍山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340600",
+              "name": "淮北市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340700",
+              "name": "铜陵市",
+              "type": "prefecture"
+            },
+            {
+              "id": "340800",
+              "name": "安庆市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341000",
+              "name": "黄山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341100",
+              "name": "滁州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341200",
+              "name": "阜阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341300",
+              "name": "宿州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341500",
+              "name": "六安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341600",
+              "name": "亳州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341700",
+              "name": "池州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "341800",
+              "name": "宣城市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "350000",
+          "name": "福建省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "350100",
+              "name": "福州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350200",
+              "name": "厦门市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350300",
+              "name": "莆田市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350400",
+              "name": "三明市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350500",
+              "name": "泉州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350600",
+              "name": "漳州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350700",
+              "name": "南平市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350800",
+              "name": "龙岩市",
+              "type": "prefecture"
+            },
+            {
+              "id": "350900",
+              "name": "宁德市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "360000",
+          "name": "江西省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "360100",
+              "name": "南昌市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360200",
+              "name": "景德镇市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360300",
+              "name": "萍乡市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360400",
+              "name": "九江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360500",
+              "name": "新余市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360600",
+              "name": "鹰潭市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360700",
+              "name": "赣州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360800",
+              "name": "吉安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "360900",
+              "name": "宜春市",
+              "type": "prefecture"
+            },
+            {
+              "id": "361000",
+              "name": "抚州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "361100",
+              "name": "上饶市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "370000",
+          "name": "山东省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "370100",
+              "name": "济南市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370200",
+              "name": "青岛市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370300",
+              "name": "淄博市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370400",
+              "name": "枣庄市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370500",
+              "name": "东营市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370600",
+              "name": "烟台市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370700",
+              "name": "潍坊市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370800",
+              "name": "济宁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "370900",
+              "name": "泰安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371000",
+              "name": "威海市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371100",
+              "name": "日照市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371300",
+              "name": "临沂市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371400",
+              "name": "德州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371500",
+              "name": "聊城市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371600",
+              "name": "滨州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "371700",
+              "name": "菏泽市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "410000",
+          "name": "河南省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "410100",
+              "name": "郑州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410200",
+              "name": "开封市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410300",
+              "name": "洛阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410400",
+              "name": "平顶山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410500",
+              "name": "安阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410600",
+              "name": "鹤壁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410700",
+              "name": "新乡市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410800",
+              "name": "焦作市",
+              "type": "prefecture"
+            },
+            {
+              "id": "410900",
+              "name": "濮阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411000",
+              "name": "许昌市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411100",
+              "name": "漯河市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411200",
+              "name": "三门峡市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411300",
+              "name": "南阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411400",
+              "name": "商丘市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411500",
+              "name": "信阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411600",
+              "name": "周口市",
+              "type": "prefecture"
+            },
+            {
+              "id": "411700",
+              "name": "驻马店市",
+              "type": "prefecture"
+            },
+            {
+              "id": "419001",
+              "name": "济源市",
+              "type": "province-direct"
+            }
+          ]
+        },
+        {
+          "id": "420000",
+          "name": "湖北省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "420100",
+              "name": "武汉市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420200",
+              "name": "黄石市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420300",
+              "name": "十堰市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420500",
+              "name": "宜昌市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420600",
+              "name": "襄阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420700",
+              "name": "鄂州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420800",
+              "name": "荆门市",
+              "type": "prefecture"
+            },
+            {
+              "id": "420900",
+              "name": "孝感市",
+              "type": "prefecture"
+            },
+            {
+              "id": "421000",
+              "name": "荆州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "421100",
+              "name": "黄冈市",
+              "type": "prefecture"
+            },
+            {
+              "id": "421200",
+              "name": "咸宁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "421300",
+              "name": "随州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "422800",
+              "name": "恩施土家族苗族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "429004",
+              "name": "仙桃市",
+              "type": "province-direct"
+            },
+            {
+              "id": "429005",
+              "name": "潜江市",
+              "type": "province-direct"
+            },
+            {
+              "id": "429006",
+              "name": "天门市",
+              "type": "province-direct"
+            },
+            {
+              "id": "429021",
+              "name": "神农架林区",
+              "type": "province-direct"
+            }
+          ]
+        },
+        {
+          "id": "430000",
+          "name": "湖南省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "430100",
+              "name": "长沙市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430200",
+              "name": "株洲市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430300",
+              "name": "湘潭市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430400",
+              "name": "衡阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430500",
+              "name": "邵阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430600",
+              "name": "岳阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430700",
+              "name": "常德市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430800",
+              "name": "张家界市",
+              "type": "prefecture"
+            },
+            {
+              "id": "430900",
+              "name": "益阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "431000",
+              "name": "郴州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "431100",
+              "name": "永州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "431200",
+              "name": "怀化市",
+              "type": "prefecture"
+            },
+            {
+              "id": "431300",
+              "name": "娄底市",
+              "type": "prefecture"
+            },
+            {
+              "id": "433100",
+              "name": "湘西土家族苗族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "440000",
+          "name": "广东省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "440100",
+              "name": "广州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440200",
+              "name": "韶关市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440300",
+              "name": "深圳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440400",
+              "name": "珠海市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440500",
+              "name": "汕头市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440600",
+              "name": "佛山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440700",
+              "name": "江门市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440800",
+              "name": "湛江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "440900",
+              "name": "茂名市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441200",
+              "name": "肇庆市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441300",
+              "name": "惠州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441400",
+              "name": "梅州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441500",
+              "name": "汕尾市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441600",
+              "name": "河源市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441700",
+              "name": "阳江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441800",
+              "name": "清远市",
+              "type": "prefecture"
+            },
+            {
+              "id": "441900",
+              "name": "东莞市",
+              "type": "prefecture"
+            },
+            {
+              "id": "442000",
+              "name": "中山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "445100",
+              "name": "潮州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "445200",
+              "name": "揭阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "445300",
+              "name": "云浮市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "450000",
+          "name": "广西壮族自治区",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "450100",
+              "name": "南宁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450200",
+              "name": "柳州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450300",
+              "name": "桂林市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450400",
+              "name": "梧州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450500",
+              "name": "北海市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450600",
+              "name": "防城港市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450700",
+              "name": "钦州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450800",
+              "name": "贵港市",
+              "type": "prefecture"
+            },
+            {
+              "id": "450900",
+              "name": "玉林市",
+              "type": "prefecture"
+            },
+            {
+              "id": "451000",
+              "name": "百色市",
+              "type": "prefecture"
+            },
+            {
+              "id": "451100",
+              "name": "贺州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "451200",
+              "name": "河池市",
+              "type": "prefecture"
+            },
+            {
+              "id": "451300",
+              "name": "来宾市",
+              "type": "prefecture"
+            },
+            {
+              "id": "451400",
+              "name": "崇左市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "460000",
+          "name": "海南省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "460100",
+              "name": "海口市",
+              "type": "prefecture"
+            },
+            {
+              "id": "460200",
+              "name": "三亚市",
+              "type": "prefecture"
+            },
+            {
+              "id": "460300",
+              "name": "三沙市",
+              "type": "prefecture"
+            },
+            {
+              "id": "460400",
+              "name": "儋州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "469001",
+              "name": "五指山市",
+              "type": "province-direct"
+            },
+            {
+              "id": "469002",
+              "name": "琼海市",
+              "type": "province-direct"
+            },
+            {
+              "id": "469005",
+              "name": "文昌市",
+              "type": "province-direct"
+            },
+            {
+              "id": "469006",
+              "name": "万宁市",
+              "type": "province-direct"
+            },
+            {
+              "id": "469007",
+              "name": "东方市",
+              "type": "province-direct"
+            },
+            {
+              "id": "469021",
+              "name": "定安县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469022",
+              "name": "屯昌县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469023",
+              "name": "澄迈县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469024",
+              "name": "临高县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469025",
+              "name": "白沙黎族自治县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469026",
+              "name": "昌江黎族自治县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469027",
+              "name": "乐东黎族自治县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469028",
+              "name": "陵水黎族自治县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469029",
+              "name": "保亭黎族苗族自治县",
+              "type": "province-direct"
+            },
+            {
+              "id": "469030",
+              "name": "琼中黎族苗族自治县",
+              "type": "province-direct"
+            }
+          ]
+        },
+        {
+          "id": "500000",
+          "name": "重庆市",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "500000",
+              "name": "重庆市",
+              "type": "municipality"
+            }
+          ]
+        },
+        {
+          "id": "510000",
+          "name": "四川省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "510100",
+              "name": "成都市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510300",
+              "name": "自贡市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510400",
+              "name": "攀枝花市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510500",
+              "name": "泸州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510600",
+              "name": "德阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510700",
+              "name": "绵阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510800",
+              "name": "广元市",
+              "type": "prefecture"
+            },
+            {
+              "id": "510900",
+              "name": "遂宁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511000",
+              "name": "内江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511100",
+              "name": "乐山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511300",
+              "name": "南充市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511400",
+              "name": "眉山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511500",
+              "name": "宜宾市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511600",
+              "name": "广安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511700",
+              "name": "达州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511800",
+              "name": "雅安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "511900",
+              "name": "巴中市",
+              "type": "prefecture"
+            },
+            {
+              "id": "512000",
+              "name": "资阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "513200",
+              "name": "阿坝藏族羌族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "513300",
+              "name": "甘孜藏族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "513400",
+              "name": "凉山彝族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "520000",
+          "name": "贵州省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "520100",
+              "name": "贵阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "520200",
+              "name": "六盘水市",
+              "type": "prefecture"
+            },
+            {
+              "id": "520300",
+              "name": "遵义市",
+              "type": "prefecture"
+            },
+            {
+              "id": "520400",
+              "name": "安顺市",
+              "type": "prefecture"
+            },
+            {
+              "id": "520500",
+              "name": "毕节市",
+              "type": "prefecture"
+            },
+            {
+              "id": "520600",
+              "name": "铜仁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "522300",
+              "name": "黔西南布依族苗族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "522600",
+              "name": "黔东南苗族侗族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "522700",
+              "name": "黔南布依族苗族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "530000",
+          "name": "云南省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "530100",
+              "name": "昆明市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530300",
+              "name": "曲靖市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530400",
+              "name": "玉溪市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530500",
+              "name": "保山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530600",
+              "name": "昭通市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530700",
+              "name": "丽江市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530800",
+              "name": "普洱市",
+              "type": "prefecture"
+            },
+            {
+              "id": "530900",
+              "name": "临沧市",
+              "type": "prefecture"
+            },
+            {
+              "id": "532300",
+              "name": "楚雄彝族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "532500",
+              "name": "红河哈尼族彝族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "532600",
+              "name": "文山壮族苗族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "532800",
+              "name": "西双版纳傣族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "532900",
+              "name": "大理白族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "533100",
+              "name": "德宏傣族景颇族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "533300",
+              "name": "怒江傈僳族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "533400",
+              "name": "迪庆藏族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "540000",
+          "name": "西藏自治区",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "540100",
+              "name": "拉萨市",
+              "type": "prefecture"
+            },
+            {
+              "id": "540200",
+              "name": "日喀则市",
+              "type": "prefecture"
+            },
+            {
+              "id": "540300",
+              "name": "昌都市",
+              "type": "prefecture"
+            },
+            {
+              "id": "540400",
+              "name": "林芝市",
+              "type": "prefecture"
+            },
+            {
+              "id": "540500",
+              "name": "山南市",
+              "type": "prefecture"
+            },
+            {
+              "id": "540600",
+              "name": "那曲市",
+              "type": "prefecture"
+            },
+            {
+              "id": "542500",
+              "name": "阿里地区",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "610000",
+          "name": "陕西省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "610100",
+              "name": "西安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610200",
+              "name": "铜川市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610300",
+              "name": "宝鸡市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610400",
+              "name": "咸阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610500",
+              "name": "渭南市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610600",
+              "name": "延安市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610700",
+              "name": "汉中市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610800",
+              "name": "榆林市",
+              "type": "prefecture"
+            },
+            {
+              "id": "610900",
+              "name": "安康市",
+              "type": "prefecture"
+            },
+            {
+              "id": "611000",
+              "name": "商洛市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "620000",
+          "name": "甘肃省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "620100",
+              "name": "兰州市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620200",
+              "name": "嘉峪关市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620300",
+              "name": "金昌市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620400",
+              "name": "白银市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620500",
+              "name": "天水市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620600",
+              "name": "武威市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620700",
+              "name": "张掖市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620800",
+              "name": "平凉市",
+              "type": "prefecture"
+            },
+            {
+              "id": "620900",
+              "name": "酒泉市",
+              "type": "prefecture"
+            },
+            {
+              "id": "621000",
+              "name": "庆阳市",
+              "type": "prefecture"
+            },
+            {
+              "id": "621100",
+              "name": "定西市",
+              "type": "prefecture"
+            },
+            {
+              "id": "621200",
+              "name": "陇南市",
+              "type": "prefecture"
+            },
+            {
+              "id": "622900",
+              "name": "临夏回族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "623000",
+              "name": "甘南藏族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "630000",
+          "name": "青海省",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "630100",
+              "name": "西宁市",
+              "type": "prefecture"
+            },
+            {
+              "id": "630200",
+              "name": "海东市",
+              "type": "prefecture"
+            },
+            {
+              "id": "632200",
+              "name": "海北藏族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "632300",
+              "name": "黄南藏族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "632500",
+              "name": "海南藏族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "632600",
+              "name": "果洛藏族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "632700",
+              "name": "玉树藏族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "632800",
+              "name": "海西蒙古族藏族自治州",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "640000",
+          "name": "宁夏回族自治区",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "640100",
+              "name": "银川市",
+              "type": "prefecture"
+            },
+            {
+              "id": "640200",
+              "name": "石嘴山市",
+              "type": "prefecture"
+            },
+            {
+              "id": "640300",
+              "name": "吴忠市",
+              "type": "prefecture"
+            },
+            {
+              "id": "640400",
+              "name": "固原市",
+              "type": "prefecture"
+            },
+            {
+              "id": "640500",
+              "name": "中卫市",
+              "type": "prefecture"
+            }
+          ]
+        },
+        {
+          "id": "650000",
+          "name": "新疆维吾尔自治区",
+          "timezone": "Asia/Shanghai",
+          "cities": [
+            {
+              "id": "650100",
+              "name": "乌鲁木齐市",
+              "type": "prefecture"
+            },
+            {
+              "id": "650200",
+              "name": "克拉玛依市",
+              "type": "prefecture"
+            },
+            {
+              "id": "650400",
+              "name": "吐鲁番市",
+              "type": "prefecture"
+            },
+            {
+              "id": "650500",
+              "name": "哈密市",
+              "type": "prefecture"
+            },
+            {
+              "id": "652300",
+              "name": "昌吉回族自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "652700",
+              "name": "博尔塔拉蒙古自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "652800",
+              "name": "巴音郭楞蒙古自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "652900",
+              "name": "阿克苏地区",
+              "type": "prefecture"
+            },
+            {
+              "id": "653000",
+              "name": "克孜勒苏柯尔克孜自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "653100",
+              "name": "喀什地区",
+              "type": "prefecture"
+            },
+            {
+              "id": "653200",
+              "name": "和田地区",
+              "type": "prefecture"
+            },
+            {
+              "id": "654000",
+              "name": "伊犁哈萨克自治州",
+              "type": "prefecture"
+            },
+            {
+              "id": "654200",
+              "name": "塔城地区",
+              "type": "prefecture"
+            },
+            {
+              "id": "654300",
+              "name": "阿勒泰地区",
+              "type": "prefecture"
+            },
+            {
+              "id": "659001",
+              "name": "石河子市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659002",
+              "name": "阿拉尔市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659003",
+              "name": "图木舒克市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659004",
+              "name": "五家渠市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659005",
+              "name": "北屯市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659006",
+              "name": "铁门关市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659007",
+              "name": "双河市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659008",
+              "name": "可克达拉市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659009",
+              "name": "昆玉市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659010",
+              "name": "胡杨河市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659011",
+              "name": "新星市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659012",
+              "name": "白杨市",
+              "type": "province-direct"
+            },
+            {
+              "id": "659013",
+              "name": "草湖市",
+              "type": "province-direct"
+            }
+          ]
+        },
+        {
+          "id": "710000",
+          "name": "台湾省",
+          "timezone": "Asia/Taipei",
+          "cities": [
+            {
+              "id": "TW-taipei",
+              "name": "台北市",
+              "aliases": [
+                "臺北市"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-new-taipei",
+              "name": "新北市",
+              "type": "county-city"
+            },
+            {
+              "id": "TW-taoyuan",
+              "name": "桃园市",
+              "aliases": [
+                "桃園市"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-taichung",
+              "name": "台中市",
+              "aliases": [
+                "臺中市"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-tainan",
+              "name": "台南市",
+              "aliases": [
+                "臺南市"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-kaohsiung",
+              "name": "高雄市",
+              "type": "county-city"
+            },
+            {
+              "id": "TW-keelung",
+              "name": "基隆市",
+              "type": "county-city"
+            },
+            {
+              "id": "TW-hsinchu-city",
+              "name": "新竹市",
+              "type": "county-city"
+            },
+            {
+              "id": "TW-chiayi-city",
+              "name": "嘉义市",
+              "aliases": [
+                "嘉義市"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-hsinchu-county",
+              "name": "新竹县",
+              "aliases": [
+                "新竹縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-miaoli",
+              "name": "苗栗县",
+              "aliases": [
+                "苗栗縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-changhua",
+              "name": "彰化县",
+              "aliases": [
+                "彰化縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-nantou",
+              "name": "南投县",
+              "aliases": [
+                "南投縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-yunlin",
+              "name": "云林县",
+              "aliases": [
+                "雲林縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-chiayi-county",
+              "name": "嘉义县",
+              "aliases": [
+                "嘉義縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-pingtung",
+              "name": "屏东县",
+              "aliases": [
+                "屏東縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-yilan",
+              "name": "宜兰县",
+              "aliases": [
+                "宜蘭縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-hualien",
+              "name": "花莲县",
+              "aliases": [
+                "花蓮縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-taitung",
+              "name": "台东县",
+              "aliases": [
+                "臺東縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-penghu",
+              "name": "澎湖县",
+              "aliases": [
+                "澎湖縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-kinmen",
+              "name": "金门县",
+              "aliases": [
+                "金門縣"
+              ],
+              "type": "county-city"
+            },
+            {
+              "id": "TW-lienchiang",
+              "name": "连江县",
+              "aliases": [
+                "連江縣"
+              ],
+              "type": "county-city"
+            }
+          ]
+        },
+        {
+          "id": "810000",
+          "name": "香港特别行政区",
+          "timezone": "Asia/Hong_Kong",
+          "cities": [
+            {
+              "id": "810000",
+              "name": "香港特别行政区",
+              "type": "special-region"
+            }
+          ]
+        },
+        {
+          "id": "820000",
+          "name": "澳门特别行政区",
+          "timezone": "Asia/Macau",
+          "cities": [
+            {
+              "id": "820000",
+              "name": "澳门特别行政区",
+              "type": "special-region"
+            }
+          ]
+        }
+      ]
+    }
   ],
   "timezones": [
-    "Asia/Shanghai", "Asia/Hong_Kong", "Asia/Tokyo", "Asia/Singapore", "Asia/Seoul", "Asia/Kolkata",
-    "Europe/London", "Europe/Paris", "Europe/Berlin", "America/New_York", "America/Chicago",
-    "America/Los_Angeles", "Australia/Sydney", "Pacific/Auckland", "Etc/UTC"
+    "Asia/Shanghai",
+    "Asia/Hong_Kong",
+    "Asia/Macau",
+    "Asia/Taipei",
+    "Asia/Tokyo",
+    "Asia/Singapore",
+    "Asia/Seoul",
+    "Asia/Kolkata",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Berlin",
+    "America/New_York",
+    "America/Chicago",
+    "America/Los_Angeles",
+    "Australia/Sydney",
+    "Pacific/Auckland",
+    "Etc/UTC"
   ]
 }
