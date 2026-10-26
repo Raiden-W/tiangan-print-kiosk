@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from 'react'
 import Welcome from './pages/Welcome.jsx'
 import Discover from './pages/Discover.jsx'
 import Result from './pages/Result.jsx'
-import { getRuntimeInfo } from './services/platform.js'
+import { clearTestTicket, getRuntimeInfo } from './services/platform.js'
 import { initialSession, sessionReducer } from '../shared/session.js'
 import { validateParticipant } from '../shared/participant.js'
 import { getFortune } from '../shared/fortune.js'
@@ -14,6 +14,12 @@ const pages = { welcome: '01', discover: '02', result: '03' }
 export default function App() {
   const [state, dispatch] = useReducer(sessionReducer, undefined, initialSession)
   const [runtime, setRuntime] = useState(null)
+  const [printing, setPrinting] = useState(false)
+  function resetSession() {
+    void clearTestTicket().catch(() => {})
+    setPrinting(false)
+    dispatch({ type: 'reset' })
+  }
   useEffect(() => {
     let active = true
     getRuntimeInfo().then((info) => { if (active) setRuntime(info) })
@@ -22,11 +28,11 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (state.page === 'welcome') return
+    if (state.page === 'welcome' || printing) return
     let timer
     const restartTimer = () => {
       clearTimeout(timer)
-      timer = setTimeout(() => dispatch({ type: 'reset' }), IDLE_TIMEOUT_MS)
+      timer = setTimeout(resetSession, IDLE_TIMEOUT_MS)
     }
     restartTimer()
     window.addEventListener('pointerdown', restartTimer)
@@ -38,7 +44,7 @@ export default function App() {
       window.removeEventListener('keydown', restartTimer)
       window.removeEventListener('input', restartTimer)
     }
-  }, [state.page])
+  }, [state.page, printing])
 
   function discover() {
     const errors = validateParticipant(state.participant)
@@ -59,16 +65,17 @@ export default function App() {
         <span className="wordmark">B1OCK <span>FORTUNE ITEMS</span></span>
         <span className="edition">文化互动体验 <span className="edition-dot" /> {pages[state.page]} / 03</span>
       </header>
-      <div className="prototype-note" role="note">基础原型 · 串珠资料为测试占位内容 · 实体打印暂未启用</div>
+      <div className="prototype-note" role="note">基础原型 · 串珠资料为测试占位内容 · 仅提供不可核销的打印测试票</div>
       <main id="main-content" key={state.page}>
         {state.page === 'welcome' && <Welcome onStart={() => dispatch({ type: 'start' })} />}
         {state.page === 'discover' && <Discover
           participant={state.participant} errors={state.errors}
           onChange={(fields) => dispatch({ type: 'change', fields })}
-          onSubmit={discover} onBack={() => dispatch({ type: 'reset' })}
+          onSubmit={discover} onBack={resetSession}
         />}
         {state.page === 'result' && <Result nickname={state.participant.nickname.trim()}
-          result={state.result} onFinish={() => dispatch({ type: 'reset' })} />}
+          birthDate={state.participant.birthDate} result={state.result} runtime={runtime}
+          onPrintingChange={setPrinting} onFinish={resetSession} />}
       </main>
       <footer className="page-footer"><span>本测试仅供娱乐与体验参考。</span><span>{runtimeLabel}</span></footer>
     </div>

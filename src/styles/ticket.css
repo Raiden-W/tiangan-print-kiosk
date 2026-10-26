@@ -1,0 +1,28 @@
+.ticket-preview { display: flex; justify-content: center; overflow: auto; padding: 22px; background: #e5e7da; border: 1px solid #c8cdc3; }
+.ticket-preview .fortune-ticket { width: 58mm; padding-right: 5mm; padding-left: 5mm; box-shadow: 0 10px 28px #263b2b20; zoom: 1.45; }
+.fortune-ticket { width: 48mm; padding: 4mm 0 5mm; box-sizing: border-box; background: white; color: #111; font-family: Arial, 'Microsoft YaHei', sans-serif; font-size: 8pt; line-height: 1.25; text-align: center; overflow: hidden; }
+.ticket-head { padding: 1mm 0 0; }
+.ticket-brand { font-size: 10pt; font-weight: 700; }
+.ticket-title { margin-top: 3mm; font-size: 14pt; font-weight: 800; }
+.ticket-anniversary { margin-top: 3mm; font-size: 8pt; }
+.ticket-rule { height: 0; border-top: .25mm solid #111; margin: 5mm 0; }
+.ticket-fields { display: grid; gap: 4mm; margin: 6mm 0; }
+.ticket-field { display: flex; justify-content: space-between; gap: 2mm; align-items: baseline; text-align: left; font-size: 8.5pt; }
+.ticket-field strong { font-weight: 400; text-align: right; overflow-wrap: anywhere; min-width: 0; }
+.ticket-fortune { display: flex; flex-direction: column; align-items: center; }
+.ticket-label { font-size: 8pt; }
+.ticket-bead { width: 18mm; height: 18mm; margin: 5mm 0 3mm; }
+.ticket-bead-name { font-size: 11pt; font-weight: 700; overflow-wrap: anywhere; }
+.ticket-bead-subtitle { font-size: 8pt; margin-top: 2mm; }
+.ticket-meaning { font-size: 8pt; line-height: 1.45; margin: 3mm 0 0; overflow-wrap: anywhere; }
+.ticket-redeem-title { font-size: 9pt; font-weight: 700; }
+.ticket-redeem p { font-size: 8pt; margin: 3mm 0 4mm; }
+.ticket-barcode { display: block; width: 100%; max-width: 46mm; height: 11mm; margin: 0 auto; shape-rendering: crispEdges; }
+.ticket-code { font-size: 8pt; margin-top: 3mm; letter-spacing: .04em; }
+.ticket-disclaimer { color: #444; font-size: 7pt; margin-top: 3mm; }
+.ticket-footer { font-size: 8pt; margin-top: 5mm; white-space: nowrap; }
+@page { margin: 0; }
+@media print {
+  html, body, #root { width: 48mm; min-width: 0; margin: 0; padding: 0; background: white; }
+  .fortune-ticket { box-shadow: none; page-break-inside: avoid; break-inside: avoid; }
+}

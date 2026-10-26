@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { fileURLToPath } from 'node:url'
 
 export default defineConfig(({ command }) => {
   const development = command === 'serve'
@@ -27,6 +28,12 @@ export default defineConfig(({ command }) => {
       watch: { ignored: ['**/.tools/**', '**/release/**', '**/output/**', '**/.playwright-cli/**'] },
     },
     preview: { host: '127.0.0.1', port: 4173, strictPort: true },
-    build: { outDir: 'dist', target: 'es2022' },
+    build: {
+      outDir: 'dist', target: 'es2022',
+      rollupOptions: { input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        print: fileURLToPath(new URL('./print.html', import.meta.url)),
+      } },
+    },
   }
 })

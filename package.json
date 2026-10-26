@@ -7,7 +7,9 @@
   "license": "UNLICENSED",
   "type": "module",
   "main": "electron/main.js",
-  "engines": { "node": ">=24 <25" },
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "dev:web": "vite",
@@ -22,6 +24,7 @@
     "dist:win": "node scripts/package-windows.mjs"
   },
   "dependencies": {
+    "jsbarcode": "3.12.3",
     "lunar-javascript": "1.7.7",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -42,10 +45,27 @@
   "build": {
     "appId": "com.b1ock.tianganprintkiosk",
     "productName": "Tiangan Print Kiosk",
-    "directories": { "output": "release" },
-    "files": ["dist/**/*", "electron/**/*", "shared/**/*", "content/**/*", "package.json"],
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "shared/**/*",
+      "content/**/*",
+      "package.json"
+    ],
     "asar": true,
-    "win": { "target": ["nsis"], "signAndEditExecutable": false },
-    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true }
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
   }
 }

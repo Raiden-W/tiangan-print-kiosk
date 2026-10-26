@@ -64,5 +64,10 @@
 .meaning .eyebrow { margin-bottom: 12px; }
 .meaning > p:last-child { max-width: 720px; font-size: 15px; line-height: 1.9; color: #5f6d60; margin-bottom: 0; }
 .result-actions { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+.ticket-section { margin: 30px 0; }
+.ticket-section-heading { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 12px; }
+.ticket-section-heading .eyebrow { margin-bottom: 4px; }
+.ticket-section-heading h2 { margin-bottom: 0; font-size: 21px; font-weight: 500; }
+.ticket-section-heading > p { margin: 0; font-size: 12px; color: #6d786e; }
 @media (max-width: 800px) { .welcome-page { min-height: auto; gap: 20px; padding-top: 48px; } .welcome-copy h1 { font-size: 44px; } .fortune-wheel { max-width: 340px; } .discovery-form { column-gap: 20px; } .input-pair { gap: 8px; } input, select { font-size: 15px; padding: 12px 9px; } }
 @media (max-width: 600px) { .welcome-page { grid-template-columns: 1fr; } .fortune-wheel { grid-row: 1; max-width: 230px; margin-bottom: 28px; } .welcome-copy h1 { font-size: 42px; } .welcome-copy h1 br:nth-of-type(2) { display: none; } .welcome-copy h1 span { display: inline; } .wheel-core { font-size: 45px; } .wheel-core span { font-size: 8px; } .stem-grid span { width: 28px; height: 28px; font-size: 16px; } .discovery-form { grid-template-columns: 1fr; } .form-actions .primary { min-width: 0; flex: 1; } .form-actions .secondary { min-width: 100px; } .result-grid { grid-template-columns: 1fr; } .stem-card { border-right: 0; border-bottom: 1px solid #c8cdc3; } .result-actions { flex-direction: column; } .result-actions > div, .result-actions .button { width: 100%; } }
