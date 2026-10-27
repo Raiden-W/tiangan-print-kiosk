@@ -1,4 +1,4 @@
-export const NICKNAME_LIMIT = 24
+export const NICKNAME_LIMIT = 50
 
 const segments = new Intl.Segmenter('zh-CN', { granularity: 'grapheme' })
 
@@ -6,8 +6,8 @@ export function nicknameLength(value) {
   return Array.from(value).length
 }
 
-export function limitNickname(value) {
-  return Array.from(value).slice(0, NICKNAME_LIMIT).join('')
+export function limitNickname(value, limit = NICKNAME_LIMIT) {
+  return Array.from(value).slice(0, limit).join('')
 }
 
 // DOM selections use UTF-16 offsets; deletion and cursor movement use whole graphemes.
@@ -19,9 +19,9 @@ export function nicknameCursor(value, start, end, direction) {
     : (boundaries.find((index) => index > end) ?? value.length)
 }
 
-export function editNickname(value, start, end, text, backspace = false) {
+export function editNickname(value, start, end, text, backspace = false, limit = NICKNAME_LIMIT) {
   if (backspace && start === end) start = nicknameCursor(value, start, end, -1)
   const next = value.slice(0, start) + text + value.slice(end)
-  if (nicknameLength(next) > NICKNAME_LIMIT) return null
+  if (nicknameLength(next) > limit) return null
   return { value: next, caret: start + text.length }
 }

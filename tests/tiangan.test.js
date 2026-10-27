@@ -35,15 +35,18 @@ test('day-stem output is invariant across process TZ settings', () => {
   }
 })
 
-test('all ten stems have renderable data and can share one placeholder bead', () => {
+test('all ten stems map to five element meanings and share text within each element', () => {
   assert.equal(validateFortuneContent(content), true)
   assert.equal(Object.keys(content.assignments).length, 10)
-  assert.equal(new Set(Object.values(content.assignments)).size, 1)
+  assert.equal(new Set(Object.values(content.assignments)).size, 5)
+  for (let index = 0; index < STEMS.length; index += 2) {
+    assert.equal(content.assignments[STEMS[index]], content.assignments[STEMS[index + 1]])
+  }
   const result = getFortune('1986-05-29', content, TODAY)
   assert.equal(result.nameZh, '癸水')
   assert.equal(result.nameEn, 'YIN WATER')
-  assert.equal(result.placeholder, true)
-  assert.equal(result.bead.name, '测试串珠 A')
+  assert.equal(result.placeholder, false)
+  assert.equal(result.bead.name, '水元素串珠')
   const invalid = structuredClone(content)
   invalid.assignments['辛'] = 'missing-bead'
   assert.throws(() => validateFortuneContent(invalid), /辛/)

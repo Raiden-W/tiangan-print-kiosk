@@ -1,6 +1,27 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'node:url'
+import { readFileSync } from 'node:fs'
+
+// Keep one editable source of truth; serve it locally and emit a standalone JSON in dist.
+function fortuneContentPlugin() {
+  const filename = new URL('./content/fortune.json', import.meta.url)
+  return {
+    name: 'fortune-content',
+    configureServer(server) {
+      server.middlewares.use('/content/fortune.json', (_request, response) => {
+        try {
+          response.setHeader('Content-Type', 'application/json; charset=utf-8')
+          response.setHeader('Cache-Control', 'no-store')
+          response.end(readFileSync(filename))
+        } catch { response.statusCode = 500; response.end('Content unavailable') }
+      })
+    },
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'content/fortune.json', source: readFileSync(filename) })
+    },
+  }
+}
 
 export default defineConfig(({ command }) => {
   const development = command === 'serve'
@@ -21,6 +42,7 @@ export default defineConfig(({ command }) => {
     base: './',
     plugins: [
       react(),
+      fortuneContentPlugin(),
       { name: 'kiosk-csp', transformIndexHtml: (html) => html.replace('__KIOSK_CSP__', policy) },
     ],
     server: {

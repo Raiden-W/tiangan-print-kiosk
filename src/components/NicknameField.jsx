@@ -16,7 +16,7 @@ export default function NicknameField({ value, error, onChange }) {
           onCompositionEnd={(event) => onChange(limitNickname(event.currentTarget.value))} />
         <button type="button" className="nickname-keyboard-trigger" aria-label="打开昵称触摸键盘" aria-haspopup="dialog" onClick={() => setOpen(true)}>键盘</button>
       </div>
-      <p className="field-hint" id="nickname-hint">点击输入昵称，支持中文拼音 / English，最多 24 个字符。</p>
+      <p className="field-hint" id="nickname-hint">点击输入昵称，支持中文拼音 / English，最多 50 个字符。</p>
       {error && <p className="field-error" id="nickname-error">{error}</p>}
       {open && <NicknameKeyboard value={value} onChange={onChange} onDismiss={() => setOpen(false)} />}
     </div>

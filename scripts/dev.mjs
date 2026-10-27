@@ -11,7 +11,7 @@ server.printUrls()
 const environment = { ...process.env, KIOSK_DEV_URL: 'http://127.0.0.1:5173' }
 delete environment.ELECTRON_RUN_AS_NODE
 const child = spawn(electron, ['.', ...process.argv.slice(2)], {
-  cwd: root, env: environment, stdio: 'inherit', windowsHide: true,
+  cwd: root, env: environment, stdio: 'inherit',
 })
 let stopping = false
 async function stop(code = 0) {

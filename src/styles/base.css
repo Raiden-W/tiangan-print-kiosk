@@ -1,33 +1,37 @@
-:root { font-family: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif; color: #243c31; background: #f3f0e8; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-weight: 400; }
+@import './fonts.css';
+:root { font-family: 'Fortune Song', serif; color: #ff83d3; background: #202122; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; --pink: #ff83d3; --ink: #202122; --english: 'Misto', 'Fortune Song', sans-serif; }
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 360px; }
-button, input, select { font: inherit; }
-button, select, input[type='radio'] { touch-action: manipulation; }
-button { cursor: pointer; }
-button:disabled { cursor: not-allowed; opacity: .45; }
-button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #aa5a3e; outline-offset: 4px; }
-input, select { width: 100%; min-height: 56px; padding: 13px 15px; color: #243c31; background: #fbfaf6; border: 1px solid #c8cdc3; border-radius: 2px; font-size: 17px; }
-select { cursor: pointer; }
-select:disabled { opacity: .55; cursor: default; }
-input[aria-invalid='true'], select[aria-invalid='true'] { border-color: #9f3a2a; }
-h1, h2, p { margin-top: 0; }
-.app-shell { width: min(1440px, 100%); min-height: 100dvh; padding: 0 5vw; margin: 0 auto; display: flex; flex-direction: column; }
-.masthead { min-height: 90px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid #c8cdc3; }
-.wordmark { font-size: 25px; font-weight: 800; letter-spacing: -.06em; white-space: nowrap; }
-.wordmark span { margin-left: 12px; font-size: 12px; letter-spacing: .12em; font-weight: 600; }
-.edition { font-size: 12px; color: #5c6c60; display: flex; align-items: center; gap: 14px; }
-.edition-dot { width: 6px; height: 6px; border-radius: 100%; background: #aa5a3e; }
-.prototype-note { font-size: 12px; color: #796c55; padding: 14px 0 0; line-height: 1.7; }
-main { flex: 1; width: 100%; animation: reveal .25s ease-out; }
-.page-footer { border-top: 1px solid #c8cdc3; margin-top: 40px; padding: 20px 0; display: flex; justify-content: space-between; gap: 20px; font-size: 12px; color: #6d786e; }
-.eyebrow { font-size: 11px; font-weight: 650; letter-spacing: .2em; line-height: 1.8; margin-bottom: 22px; }
-.page-title { font-size: clamp(27px, 3.4vw, 43px); line-height: 1.55; font-weight: 500; letter-spacing: -.03em; margin-bottom: 12px; overflow-wrap: anywhere; }
-.button { min-height: 56px; min-width: 148px; padding: 16px 26px; border: 1px solid #243c31; border-radius: 2px; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 32px; }
-.primary { color: #fbfaf6; background: #243c31; }
-.primary:hover:not(:disabled) { background: #365642; }
-.secondary { background: transparent; color: #243c31; }
-.secondary:hover { background: #e4e6dc; }
-.field-hint { color: #6d786e; font-size: 12px; line-height: 1.8; margin: 10px 0 0; }
-@keyframes reveal { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-@media (prefers-reduced-motion: reduce) { main { animation: none; } }
-@media (max-width: 600px) { .app-shell { padding: 0 6vw; } .masthead { min-height: 76px; } .wordmark span { display: block; margin: 0; font-size: 9px; letter-spacing: .08em; } .edition { font-size: 10px; gap: 8px; } .page-footer { font-size: 10px; } }
+html, body, #root { margin: 0; width: 1080px; height: 1920px; overflow: hidden; }
+body { margin-inline: auto; }
+button, input { font: inherit; }
+button { cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+button:disabled { cursor: default; opacity: .4; }
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid #ffd9f2; outline-offset: 5px; }
+h1, h2, p { margin: 0; font-weight: 400; }
+.app-shell, main, .page, .page-transition, .page-view { position: relative; width: 1080px; height: 1920px; }
+.app-shell { overflow: hidden; background: var(--ink); isolation: isolate; touch-action: manipulation; overscroll-behavior: none; }
+.page { user-select: none; }
+.page input { user-select: text; }
+.page-view { background-position: center; background-size: 100% 100%; background-repeat: no-repeat; }
+.page-view[data-page='welcome'] { background-image: url('/ui/elements/background page01.png'); }
+.page-view[data-page='discover'], .page-view[data-page='result'] { background-image: url('/ui/elements/background page02&03.png'); }
+.page-view[data-page='receipt'] { background-image: url('/ui/elements/background page04.png'); }
+.stack-title { position: absolute; left: 0; width: 100%; font: 400 50px/.96 var(--english); text-align: center; }
+.ornate-button { position: absolute; left: 180px; width: 720px; height: 176px; border: 0; padding: 0 36px; background: transparent; color: var(--pink); font: 400 50px/1 var(--english); transition: transform 160ms ease-out, filter 160ms ease-out; }
+.button-frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.ornate-button > span { position: relative; }
+.ornate-button:active:not(:disabled) { transform: translateY(2px); filter: brightness(.88); transition-duration: 100ms; }
+@media (hover: hover) { .ornate-button:hover:not(:disabled) { filter: brightness(1.12); } }
+.text-button { border: 0; background: transparent; color: inherit; font-size: 22px; min-height: 54px; padding: 10px 25px; }
+.text-button, .floating-panel button, .input-button { transition: background-color 120ms, color 120ms, opacity 120ms, transform 120ms; }
+.text-button:active:not(:disabled), .floating-panel button:active:not(:disabled) { transform: translateY(1px); opacity: .78; }
+.element-icon { display: block; width: 96px; height: 96px; object-fit: contain; flex: none; }
+.configuration-error { display: grid; place-items: center; padding: 120px; text-align: center; font-size: 32px; }
+.page-entering { animation: page-in 240ms ease-out both; }
+.page-entering .page > :not(.floating-layer):not(.analysis-loading) { animation: content-in 240ms ease-out both; }
+.page-leaving { animation: page-out 120ms ease-in both; }
+.page-leaving .page > :not(.floating-layer):not(.analysis-loading) { transition: transform 120ms ease-in; transform: translateY(-8px); }
+@keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes page-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes content-in { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+@keyframes feedback-in { from { opacity: 0; } to { opacity: 1; } }

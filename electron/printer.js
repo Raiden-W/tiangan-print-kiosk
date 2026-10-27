@@ -1,9 +1,7 @@
-import { BrowserWindow, ipcMain } from 'electron'
-import { randomInt, randomUUID } from 'node:crypto'
+import { randomUUID } from 'node:crypto'
 import { mkdirSync, renameSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { getFortune } from '../shared/fortune.js'
-import content from '../content/fortune.json' with { type: 'json' }
+import { ticketFromSnapshot } from '../shared/analysis.js'
 import { isTrustedRendererURL } from './security.js'
 import { printDocumentURL as resolvePrintDocumentURL } from './print-url.js'
 
@@ -11,11 +9,12 @@ const PRINTER_NAME = 'POS58Printer'
 const PRINT_TIMEOUT_MS = 60_000
 const normalizeName = (name) => name.replace(/[^a-z0-9]/gi, '').toLowerCase()
 
-export function registerPrinter({ app, getMainWindow, getRendererURL, directory }) {
+export function registerPrinter({ app, BrowserWindow, ipcMain, getMainWindow, getRendererURL, directory, getSnapshot }) {
   let job = null
   let printWindow = null
   let printDocumentURL = null
   let active = false
+  let clearAfterPrint = false
 
   function assertMainSender(event) {
     const window = getMainWindow()
@@ -34,8 +33,9 @@ export function registerPrinter({ app, getMainWindow, getRendererURL, directory 
     const folder = path.dirname(recordPath(current.id))
     mkdirSync(folder, { recursive: true })
     const record = {
-      id: current.id, barcode: current.ticket.barcode, createdAt: current.createdAt,
-      updatedAt: new Date().toISOString(), contentVersion: content.version,
+      id: current.id, createdAt: current.createdAt,
+      updatedAt: new Date().toISOString(), contentVersion: current.contentVersion,
+      promptVersion: current.promptVersion,
       state: current.state, attempts: current.attempts,
     }
     const target = recordPath(current.id)
@@ -56,22 +56,16 @@ export function registerPrinter({ app, getMainWindow, getRendererURL, directory 
 
   ipcMain.handle('print:prepare', async (event, payload) => {
     assertMainSender(event)
-    if (!payload || typeof payload.key !== 'string' || !/^[0-9a-f-]{36}$/i.test(payload.key) ||
-        typeof payload.name !== 'string' || !payload.name.trim() || payload.name.length > 48 ||
-        typeof payload.birthDate !== 'string' || payload.birthDate.length > 10) {
+    if (!payload || typeof payload.resultId !== 'string' || !/^[0-9a-f-]{36}$/i.test(payload.resultId)) {
       throw new Error('Invalid test ticket')
     }
-    if (job?.key === payload.key) return { ticket: job.ticket, state: job.state }
+    const snapshot = getSnapshot(payload.resultId)
+    if (job?.key === payload.resultId) return { ticket: job.ticket, state: job.state }
     if (active) throw new Error('Printing is in progress')
-    const fortune = getFortune(payload.birthDate, content)
-    if (!fortune.placeholder) throw new Error('Test printing requires placeholder content')
-    const ticket = {
-      name: payload.name.trim(), element: `${fortune.nameZh} / ${fortune.nameEn}`,
-      beadName: fortune.bead.name, meaning: fortune.bead.meaning,
-      barcode: `TEST-${String(randomInt(0, 100_000_000)).padStart(8, '0')}`,
-    }
+    const ticket = ticketFromSnapshot(snapshot)
     const next = {
-      id: randomUUID(), key: payload.key, ticket, createdAt: new Date().toISOString(),
+      id: randomUUID(), key: payload.resultId, ticket, createdAt: new Date().toISOString(),
+      contentVersion: snapshot.result.contentVersion, promptVersion: snapshot.promptVersion,
       state: 'prepared', attempts: 0,
     }
     saveRecord(next, true)
@@ -96,14 +90,14 @@ export function registerPrinter({ app, getMainWindow, getRendererURL, directory 
   ipcMain.handle('print:submit', async (event, key) => {
     assertMainSender(event)
     if (!job || job.key !== key) throw new Error('Test ticket has expired')
-    if (active) return { state: 'submitting', barcode: job.ticket.barcode }
-    if (job.state !== 'prepared') return { state: job.state, barcode: job.ticket.barcode }
-    const printer = await findPrinter()
-    if (!printer) return { state: 'printer-missing', barcode: job.ticket.barcode }
-
+    if (active) return { state: 'submitting' }
+    if (job.state !== 'prepared') return { state: job.state }
     const current = job
     active = true
     try {
+      let printer
+      try { printer = await findPrinter() } catch { return { state: 'printer-unavailable' } }
+      if (!printer) return { state: 'printer-missing' }
       printWindow = new BrowserWindow({
         show: false, width: 300, height: 800,
         webPreferences: {
@@ -119,6 +113,7 @@ export function registerPrinter({ app, getMainWindow, getRendererURL, directory 
         if (!isTrustedRendererURL(url, printDocumentURL)) navigationEvent.preventDefault()
       })
       await printWindow.loadURL(printURL)
+      let readyTimer
       const ready = await Promise.race([
         printWindow.webContents.executeJavaScript(`new Promise((resolve) => {
           const timer = setInterval(() => {
@@ -127,8 +122,8 @@ export function registerPrinter({ app, getMainWindow, getRendererURL, directory 
             }
           }, 30)
         })`),
-        new Promise((resolve) => setTimeout(() => resolve(false), 10_000)),
-      ])
+        new Promise((resolve) => { readyTimer = setTimeout(() => resolve(false), 10_000) }),
+      ]).finally(() => clearTimeout(readyTimer))
       if (!ready) throw new Error('Print document did not load')
       const ticketHeightPx = await printWindow.webContents.executeJavaScript(`(() => {
         const ticket = document.querySelector('.fortune-ticket')
@@ -161,13 +156,18 @@ export function registerPrinter({ app, getMainWindow, getRendererURL, directory 
       printWindow = null
       printDocumentURL = null
       active = false
-      saveRecord(current)
+      try { saveRecord(current) } finally {
+        if (clearAfterPrint) { job = null; clearAfterPrint = false }
+      }
     }
-    return { state: current.state, barcode: current.ticket.barcode }
+    return { state: current.state }
   })
 
   return {
     findPrinter,
-    clearOnReload() { if (!active) job = null },
+    clearOnReload() {
+      if (active) clearAfterPrint = true
+      else job = null
+    },
   }
 }

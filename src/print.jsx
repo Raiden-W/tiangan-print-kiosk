@@ -4,8 +4,10 @@ import './styles/ticket.css'
 
 async function render() {
   const ticket = await window.kioskPrint.getTicket()
-  createRoot(document.getElementById('root')).render(<FortuneTicket ticket={ticket} />)
+  createRoot(document.getElementById('root')).render(<FortuneTicket ticket={ticket} physicalPrint />)
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
   await document.fonts.ready
+  await Promise.all([...document.images].map((image) => image.decode()))
   await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
   window.__ticketReady = true
 }

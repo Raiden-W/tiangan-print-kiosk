@@ -9,3 +9,9 @@ export function isTrustedRendererURL(candidate, expected) {
     return false
   }
 }
+
+export function assertMainSender(event, window, rendererURL) {
+  if (!window || event.sender !== window.webContents ||
+      event.senderFrame !== window.webContents.mainFrame ||
+      !isTrustedRendererURL(event.senderFrame.url, rendererURL)) throw new Error('Untrusted IPC sender')
+}

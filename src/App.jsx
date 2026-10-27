@@ -1,25 +1,44 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import Welcome from './pages/Welcome.jsx'
 import Discover from './pages/Discover.jsx'
 import Result from './pages/Result.jsx'
-import { clearTestTicket, getRuntimeInfo } from './services/platform.js'
+import Receipt from './pages/Receipt.jsx'
+import PageTransition from './components/PageTransition.jsx'
+import { analyzeBirthInfo, cancelAnalysis, clearSession, getRuntimeInfo, prepareTestTicket, printTestTicket, previewTicket } from './services/platform.js'
 import { initialSession, sessionReducer } from '../shared/session.js'
 import { validateParticipant } from '../shared/participant.js'
-import { getFortune } from '../shared/fortune.js'
-import content from '../content/fortune.json'
 
 const IDLE_TIMEOUT_MS = 120_000
-const pages = { welcome: '01', discover: '02', result: '03' }
 
 export default function App() {
   const [state, dispatch] = useReducer(sessionReducer, undefined, initialSession)
   const [runtime, setRuntime] = useState(null)
+  const [printStatus, setPrintStatus] = useState('idle')
   const [printing, setPrinting] = useState(false)
-  function resetSession() {
-    void clearTestTicket().catch(() => {})
+  const [ticket, setTicket] = useState(null)
+  const request = useRef(null)
+  const generation = useRef(0)
+  const printLock = useRef(false)
+  const resetSession = useCallback(() => {
+    generation.current += 1
+    if (request.current) void cancelAnalysis(request.current).catch(() => {})
+    request.current = null
+    printLock.current = false
+    void clearSession().catch(() => {})
     setPrinting(false)
+    setPrintStatus('idle')
+    setTicket(null)
     dispatch({ type: 'reset' })
-  }
+  }, [])
+
+  useEffect(() => {
+    // Warm local artwork before later pages mount, so the timed paper feed never waits on an image.
+    for (const filename of ['background page01.png', 'background page02&03.png', 'background page04.png', 'pos paper layer.png', 'circle arrows.png']) {
+      const artwork = new Image()
+      artwork.src = `./ui/elements/${filename}`
+    }
+  }, [])
+
   useEffect(() => {
     let active = true
     getRuntimeInfo().then((info) => { if (active) setRuntime(info) })
@@ -30,54 +49,85 @@ export default function App() {
   useEffect(() => {
     if (state.page === 'welcome' || printing) return
     let timer
-    const restartTimer = () => {
-      clearTimeout(timer)
-      timer = setTimeout(resetSession, IDLE_TIMEOUT_MS)
-    }
-    restartTimer()
-    window.addEventListener('pointerdown', restartTimer)
-    window.addEventListener('keydown', restartTimer)
-    window.addEventListener('input', restartTimer)
+    const restart = () => { clearTimeout(timer); timer = setTimeout(resetSession, IDLE_TIMEOUT_MS) }
+    restart()
+    window.addEventListener('pointerdown', restart)
+    window.addEventListener('pointerup', restart)
+    window.addEventListener('touchmove', restart, { passive: true })
+    window.addEventListener('keydown', restart)
+    window.addEventListener('input', restart)
+    window.addEventListener('wheel', restart, { passive: true })
     return () => {
       clearTimeout(timer)
-      window.removeEventListener('pointerdown', restartTimer)
-      window.removeEventListener('keydown', restartTimer)
-      window.removeEventListener('input', restartTimer)
+      window.removeEventListener('pointerdown', restart)
+      window.removeEventListener('pointerup', restart)
+      window.removeEventListener('touchmove', restart)
+      window.removeEventListener('keydown', restart)
+      window.removeEventListener('input', restart)
+      window.removeEventListener('wheel', restart)
     }
-  }, [state.page, printing])
+  }, [state.page, printing, resetSession])
 
-  function discover() {
+  async function discover() {
+    if (request.current) return
     const errors = validateParticipant(state.participant)
     if (Object.keys(errors).length) return dispatch({ type: 'invalid', errors })
+    const requestId = crypto.randomUUID()
+    request.current = requestId
+    dispatch({ type: 'request', requestId })
     try {
-      const result = getFortune(state.participant.birthDate, content)
-      dispatch({ type: 'result', result })
+      const response = await analyzeBirthInfo(requestId, state.participant)
+      if (request.current !== requestId) return
+      if (response.ok) dispatch({ type: 'result', requestId, resultId: response.resultId, result: response.result })
+      else dispatch({ type: 'failure', requestId, message: response.message })
     } catch {
-      dispatch({ type: 'invalid', errors: { form: '暂时无法生成结果，请返回首页后重试。' } })
+      if (request.current === requestId) dispatch({ type: 'failure', requestId, message: '暂时无法连接测算服务，请重试。' })
+    } finally {
+      if (request.current === requestId) request.current = null
     }
   }
 
-  const runtimeLabel = runtime?.mode === 'desktop' ? '桌面预览'
-    : runtime?.mode === 'unavailable' ? '桌面连接异常' : '浏览器预览'
-  return (
-    <div className="app-shell">
-      <header className="masthead">
-        <span className="wordmark">B1OCK <span>FORTUNE ITEMS</span></span>
-        <span className="edition">文化互动体验 <span className="edition-dot" /> {pages[state.page]} / 03</span>
-      </header>
-      <div className="prototype-note" role="note">基础原型 · 串珠资料为测试占位内容 · 仅提供不可核销的打印测试票</div>
-      <main id="main-content" key={state.page}>
-        {state.page === 'welcome' && <Welcome onStart={() => dispatch({ type: 'start' })} />}
-        {state.page === 'discover' && <Discover
-          participant={state.participant} errors={state.errors}
-          onChange={(fields) => dispatch({ type: 'change', fields })}
-          onSubmit={discover} onBack={resetSession}
-        />}
-        {state.page === 'result' && <Result nickname={state.participant.nickname.trim()}
-          birthDate={state.participant.birthDate} result={state.result} runtime={runtime}
-          onPrintingChange={setPrinting} onFinish={resetSession} />}
-      </main>
-      <footer className="page-footer"><span>本测试仅供娱乐与体验参考。</span><span>{runtimeLabel}</span></footer>
-    </div>
-  )
+  async function print() {
+    if (printLock.current || !state.result) return
+    dispatch({ type: 'receipt' })
+    if (runtime?.mode !== 'desktop') { setPrintStatus('preview'); return }
+    const current = generation.current
+    printLock.current = true
+    setPrinting(true)
+    setPrintStatus('preparing')
+    let submitted = false
+    try {
+      const prepared = await prepareTestTicket(state.resultId)
+      if (generation.current !== current) return
+      setTicket(prepared.ticket)
+      setPrintStatus('submitting')
+      submitted = true
+      const response = await printTestTicket(state.resultId)
+      if (generation.current === current) setPrintStatus(response.state)
+    } catch {
+      if (generation.current === current) setPrintStatus(submitted ? 'unknown' : 'error')
+    } finally {
+      if (generation.current === current) {
+        printLock.current = false
+        setPrinting(false)
+      }
+    }
+  }
+
+  return <div className="app-shell">
+    <main id="main-content">
+      <PageTransition page={state.page}>
+      <div className="page-view" data-page={state.page}>
+      {state.page === 'welcome' && <Welcome onStart={() => dispatch({ type: 'start' })} />}
+      {state.page === 'discover' && <Discover participant={state.participant} errors={state.errors}
+        pending={state.status === 'pending'} onChange={(fields) => dispatch({ type: 'change', fields })}
+        onSubmit={discover} onBack={resetSession} />}
+      {state.page === 'result' && <Result nickname={state.participant.nickname.trim()} result={state.result}
+        onPrint={print} onFinish={resetSession} />}
+      {state.page === 'receipt' && <Receipt ticket={ticket || previewTicket(state.participant, state.result)}
+        status={printStatus} printing={printing} onFinish={resetSession} />}
+      </div>
+      </PageTransition>
+    </main>
+  </div>
 }

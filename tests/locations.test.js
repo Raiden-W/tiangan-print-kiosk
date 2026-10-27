@@ -69,12 +69,10 @@ test('changing parents clears child selections and suggested timezone; cross-pro
   assert.deepEqual(selectLocation(selection, 'country', ''), { country: '', province: '', city: '', timezone: '' })
 })
 
-test('both participant locations validate the hierarchy and never affect day-stem output', () => {
-  const base = { ...emptyParticipant(), nickname: 'LOCATION TEST', birthDate: '1986-05-29' }
-  const selected = { ...base, birthCountry: 'CN', birthProvince: '440000', birthCity: '440300',
-    residenceCountry: 'CN', residenceProvince: '710000', residenceCity: 'TW-taipei', birthTimezone: 'America/New_York' }
+test('participant birthplace is now free global text; legacy local calculator still only uses date', () => {
+  const base = { ...emptyParticipant(), nickname: 'LOCATION TEST', gender: 'male', birthDate: '1986-05-29', birthHour: '14', birthMinute: '30', birthplace: 'Shanghai' }
+  const selected = { ...base, birthplace: 'Springfield, USA' }
   assert.deepEqual(validateParticipant(selected, '2026-10-22'), {})
-  assert.ok(validateParticipant({ ...selected, birthProvince: '330000' }, '2026-10-22').birthPlace)
-  assert.ok(validateParticipant({ ...selected, residenceProvince: '' }, '2026-10-22').residence)
+  assert.ok(validateParticipant({ ...selected, birthplace: '' }, '2026-10-22').birthplace)
   assert.deepEqual(getFortune(base.birthDate, fortuneContent), getFortune(selected.birthDate, fortuneContent))
 })

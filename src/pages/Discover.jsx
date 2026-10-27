@@ -1,69 +1,62 @@
-import LocationFields from '../components/LocationFields.jsx'
-import NicknameField from '../components/NicknameField.jsx'
-import { localToday, MIN_BIRTH_DATE } from '../../shared/date.js'
-import locations from '../../content/locations.json'
+import { useState } from 'react'
+import NicknameKeyboard from '../components/NicknameKeyboard.jsx'
+import BirthPicker from '../components/BirthPicker.jsx'
+import ElementIcon from '../components/ElementIcon.jsx'
+import OrnateButton from '../components/OrnateButton.jsx'
+import GenderPicker from '../components/GenderPicker.jsx'
+import AnalysisLoading from '../components/AnalysisLoading.jsx'
+import { limitNickname, NICKNAME_LIMIT } from '../../shared/nickname.js'
+import { BIRTHPLACE_LIMIT } from '../../shared/participant.js'
 
-const hours = Array.from({ length: 24 }, (_, index) => String(index).padStart(2, '0'))
-const minutes = Array.from({ length: 60 }, (_, index) => String(index).padStart(2, '0'))
-
-export default function Discover({ participant: form, errors, onChange, onSubmit, onBack }) {
-  return (
-    <section className="discover-page" aria-labelledby="discover-title">
-      <p className="eyebrow">DISCOVER YOUR ELEMENT</p>
-      <h1 className="page-title" id="discover-title">填写出生信息，<br />探索属于你的天干与幸运串珠。</h1>
-      <p className="form-note">昵称与出生日期为必填项，其余选填。本次仅使用公历出生日期计算日干。</p>
-      <form className="discovery-form" autoComplete="off" noValidate onSubmit={(event) => { event.preventDefault(); onSubmit() }}>
-        <NicknameField value={form.nickname} error={errors.nickname} onChange={(nickname) => onChange({ nickname })} />
-        <fieldset className="field gender-field">
-          <legend><span className="field-number">02</span>性别 <span className="optional">选填</span></legend>
-          <div className="gender-options">{['男', '女'].map((gender) => <label className="choice" key={gender}>
-            <input type="radio" name="gender" value={gender} checked={form.gender === gender} onChange={() => onChange({ gender })} />
-            <span>{gender}</span>
-          </label>)}<button type="button" className="clear-choice" onClick={() => onChange({ gender: '' })}>清空</button></div>
-        </fieldset>
-        <div className="field">
-          <label htmlFor="birth-date"><span className="field-number">03</span>出生日期 <span className="required">*</span></label>
-          <input id="birth-date" name="birthDate" type="date" min={MIN_BIRTH_DATE} max={localToday()} value={form.birthDate}
-            aria-required="true" aria-invalid={Boolean(errors.birthDate)} aria-describedby={errors.birthDate ? 'date-error' : undefined}
-            onChange={(event) => onChange({ birthDate: event.target.value })} />
-          {errors.birthDate && <p className="field-error" id="date-error">{errors.birthDate}</p>}
+export default function Discover({ participant: form, errors, pending, onChange, onSubmit, onBack }) {
+  const [editing, setEditing] = useState(null)
+  const [picker, setPicker] = useState(null)
+  const date = form.birthDate ? form.birthDate.split('-') : ['', '', '']
+  const field = (key, label, english, limit) => <div className={`field ${key}-field`}>
+    <label htmlFor={key}>{label} / {english}</label>
+    <input id={key} value={form[key]} inputMode="none" autoComplete="off" spellCheck={false}
+      aria-required="true" aria-invalid={Boolean(errors[key])}
+      aria-describedby={errors[key] ? `${key}-error` : undefined}
+      onClick={(event) => setEditing({ key, anchor: event.currentTarget })}
+      onChange={(event) => onChange({ [key]: event.nativeEvent.isComposing ? event.target.value : limitNickname(event.target.value, limit) })}
+      onCompositionEnd={(event) => onChange({ [key]: limitNickname(event.currentTarget.value, limit) })} />
+    {errors[key] && <p className="field-error" id={`${key}-error`}>{errors[key]}</p>}
+  </div>
+  return <section className={`discover-page page${editing ? ' has-keyboard' : ''}`} aria-labelledby="discover-title">
+    <h1 className="stack-title" id="discover-title">DISCOVER<br />YOUR<br />ELEMENT</h1>
+    <form className="discovery-form" inert={Boolean(editing || picker || pending)} noValidate autoComplete="off" onSubmit={(event) => { event.preventDefault(); onSubmit() }}>
+      <fieldset className="form-fields" disabled={pending}>
+        {field('nickname', '昵称', 'NAME', NICKNAME_LIMIT)}
+        <div className="field gender-field"><label htmlFor="gender">性别 / GENDER</label>
+          <button id="gender" type="button" className="input-button" aria-required="true" aria-invalid={Boolean(errors.gender)}
+            onClick={(event) => setPicker({ mode: 'gender', anchor: event.currentTarget })}>{form.gender === 'male' ? '男' : form.gender === 'female' ? '女' : ''}</button>
+          {errors.gender && <p className="field-error">{errors.gender}</p>}
         </div>
-        <fieldset className="field">
-          <legend><span className="field-number">04</span>出生时间 <span className="optional">选填</span></legend>
-          <div className="input-pair">
-            <select aria-label="出生小时" aria-invalid={Boolean(errors.birthTime)} value={form.birthHour} onChange={(event) => onChange({ birthHour: event.target.value })}>
-              <option value="">小时</option>{hours.map((hour) => <option key={hour} value={hour}>{hour} 时</option>)}
-            </select>
-            <select aria-label="出生分钟" aria-invalid={Boolean(errors.birthTime)} value={form.birthMinute} onChange={(event) => onChange({ birthMinute: event.target.value })}>
-              <option value="">分钟</option>{minutes.map((minute) => <option key={minute} value={minute}>{minute} 分</option>)}
-            </select>
+        <div className="date-time-row">
+          <div className="field date-field"><label>出生日期 / DATE</label>
+            <div className="date-buttons">{['年', '月', '日'].map((label, i) => <button type="button" key={label}
+              className="input-button" aria-label={`选择出生${label}`} aria-invalid={Boolean(errors.birthDate)} onClick={(event) => setPicker({ mode: 'date', anchor: event.currentTarget })}>
+              {date[i] || label}</button>)}</div>
+            {errors.birthDate && <p className="field-error">{errors.birthDate}</p>}
           </div>
-          {errors.birthTime && <p className="field-error">{errors.birthTime}</p>}
-        </fieldset>
-        <fieldset className="field">
-          <legend><span className="field-number">05</span>出生地点 <span className="optional">选填</span></legend>
-          <LocationFields prefix="出生地" country={form.birthCountry} province={form.birthProvince} city={form.birthCity}
-            onChange={({ country, province, city, timezone }) => onChange({ birthCountry: country, birthProvince: province, birthCity: city, birthTimezone: timezone })} />
-          {errors.birthPlace && <p className="field-error">{errors.birthPlace}</p>}
-        </fieldset>
-        <fieldset className="field">
-          <legend><span className="field-number">06</span>现居地 <span className="optional">选填</span></legend>
-          <LocationFields prefix="现居地" country={form.residenceCountry} province={form.residenceProvince} city={form.residenceCity}
-            onChange={({ country, province, city }) => onChange({ residenceCountry: country, residenceProvince: province, residenceCity: city })} />
-          {errors.residence && <p className="field-error">{errors.residence}</p>}
-        </fieldset>
-        <div className="field timezone-field">
-          <label htmlFor="birth-timezone"><span className="field-number">07</span>出生地时区 <span className="optional">选填</span></label>
-          <select id="birth-timezone" value={form.birthTimezone} onChange={(event) => onChange({ birthTimezone: event.target.value })}>
-            <option value="">选择城市后自动建议，也可手动选择</option>
-            {locations.timezones.map((timezone) => <option key={timezone} value={timezone}>{timezone}</option>)}
-          </select>
-          <p className="field-hint">根据出生地点建议时区，可手动调整；不修正出生日期。当前地点索引仅开放中国。</p>
+          <div className="field time-field"><label htmlFor="birth-time">出生时间 / TIME</label>
+            <button type="button" id="birth-time" className="input-button" aria-invalid={Boolean(errors.birthTime)} onClick={(event) => setPicker({ mode: 'time', anchor: event.currentTarget })}>
+              {form.birthHour && form.birthMinute ? `${form.birthHour}:${form.birthMinute}` : ''}</button>
+            {errors.birthTime && <p className="field-error">{errors.birthTime}</p>}
+          </div>
         </div>
-        {Object.keys(errors).length > 0 && <p className="form-error" role="alert">{errors.form || '请检查上方标出的信息后再试。'}</p>}
-        <div className="form-actions"><button type="button" className="button secondary" onClick={onBack}>返回</button>
-          <button type="submit" className="button primary">开始测试 <span aria-hidden="true">↗</span></button></div>
-      </form>
-    </section>
-  )
+        {field('birthplace', '出生地点', 'BIRTHPLACE', BIRTHPLACE_LIMIT)}
+      </fieldset>
+      <div className="form-feedback" role="status" aria-live="polite">{errors.form || (Object.keys(errors).length ? '请补全上方标出的信息。' : '')}</div>
+      <div className="element-strip" aria-hidden="true">{['金', '木', '水', '火', '土'].map((element) => <ElementIcon key={element} element={element} />)}</div>
+      <OrnateButton className="discover-next" type="submit" disabled={pending}>{pending ? 'DISCOVERING…' : 'NEXT STEP'}</OrnateButton>
+      <button className="text-button discover-back" type="button" onClick={onBack}>{pending ? '取消，返回首页' : '返回首页'}</button>
+    </form>
+    {editing && <NicknameKeyboard key={editing.key} anchor={editing.anchor} label={editing.key === 'nickname' ? '昵称' : '出生地点'}
+      limit={editing.key === 'nickname' ? NICKNAME_LIMIT : BIRTHPLACE_LIMIT} value={form[editing.key]}
+      onChange={(value) => onChange({ [editing.key]: value })} onDismiss={() => setEditing(null)} />}
+    {picker?.mode === 'gender' && <GenderPicker value={form.gender} anchor={picker.anchor} onChange={onChange} onDismiss={() => setPicker(null)} />}
+    {picker && picker.mode !== 'gender' && <BirthPicker mode={picker.mode} anchor={picker.anchor} participant={form} onChange={onChange} onDismiss={() => setPicker(null)} />}
+    {pending && <AnalysisLoading onCancel={onBack} />}
+  </section>
 }

@@ -16,11 +16,13 @@ test('offline pinyin candidates include common nickname characters and ü spelli
 test('nickname edits replace the selected range and reject overflow without losing existing text', () => {
   assert.deepEqual(editNickname('小明', 1, 2, '白'), { value: '小白', caret: 2 })
   assert.deepEqual(editNickname('AB', 1, 1, '你'), { value: 'A你B', caret: 2 })
-  const full = '你'.repeat(24)
-  assert.equal(editNickname(full, 24, 24, 'A'), null)
-  assert.equal(editNickname(full, 23, 24, 'A').value, '你'.repeat(23) + 'A')
-  assert.equal(nicknameLength('😀'.repeat(24)), 24)
-  assert.equal(limitNickname('😀'.repeat(25)), '😀'.repeat(24))
+  const full = '你'.repeat(50)
+  assert.equal(editNickname(full, 50, 50, 'A'), null)
+  assert.equal(editNickname(full, 49, 50, 'A').value, '你'.repeat(49) + 'A')
+  assert.equal(nicknameLength('😀'.repeat(50)), 50)
+  assert.equal(limitNickname('😀'.repeat(51)), '😀'.repeat(50))
+  assert.equal(editNickname('地'.repeat(120), 120, 120, 'A', false, 120), null)
+  assert.equal(limitNickname('地'.repeat(121), 120).length, 120)
 })
 
 test('backspace and cursor keys preserve emoji and combining graphemes', () => {

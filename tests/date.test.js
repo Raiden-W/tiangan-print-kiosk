@@ -19,14 +19,20 @@ test('local today uses calendar fields rather than UTC serialization', () => {
   assert.equal(localToday(date), '2026-01-02')
 })
 
-test('only nickname and birthday are required; partial optional values are rejected', () => {
-  const form = { ...emptyParticipant(), nickname: '  LILY  ', birthDate: '1986-05-29' }
+test('all simplified fields are required with 50-character Unicode nickname and free birthplace', () => {
+  const form = { ...emptyParticipant(), nickname: '  LILY  ', gender: 'female', birthDate: '1986-05-29', birthHour: '14', birthMinute: '30', birthplace: 'Paris, France' }
   assert.deepEqual(validateParticipant(form, TODAY), {})
+  assert.ok(validateParticipant({ ...form, gender: '' }, TODAY).gender)
+  assert.ok(validateParticipant({ ...form, gender: 'invalid' }, TODAY).gender)
+  assert.equal(validateParticipant({ ...form, gender: 'male' }, TODAY).gender, undefined)
   assert.ok(validateParticipant({ ...form, nickname: '   ' }, TODAY).nickname)
-  assert.ok(validateParticipant({ ...form, nickname: '甲'.repeat(25) }, TODAY).nickname)
-  assert.equal(validateParticipant({ ...form, nickname: '🪨'.repeat(24) }, TODAY).nickname, undefined)
-  assert.ok(validateParticipant({ ...form, birthHour: '23' }, TODAY).birthTime)
+  assert.ok(validateParticipant({ ...form, nickname: '甲'.repeat(51) }, TODAY).nickname)
+  assert.equal(validateParticipant({ ...form, nickname: '🪨'.repeat(50) }, TODAY).nickname, undefined)
+  assert.ok(validateParticipant({ ...form, birthHour: '23', birthMinute: '' }, TODAY).birthTime)
   assert.ok(validateParticipant({ ...form, birthHour: '24', birthMinute: '00' }, TODAY).birthTime)
   assert.equal(validateParticipant({ ...form, birthHour: '23', birthMinute: '59' }, TODAY).birthTime, undefined)
-  assert.ok(validateParticipant({ ...form, birthCountry: 'CN' }, TODAY).birthPlace)
+  assert.ok(validateParticipant({ ...form, birthplace: ' ' }, TODAY).birthplace)
+  assert.ok(validateParticipant({ ...form, birthplace: '地'.repeat(121) }, TODAY).birthplace)
+  assert.ok(validateParticipant(emptyParticipant(), TODAY).birthTime)
+  assert.ok(validateParticipant(null, TODAY).nickname)
 })

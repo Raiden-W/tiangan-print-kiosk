@@ -9,7 +9,11 @@ export function validateFortuneContent(content) {
   for (const stem of STEMS) {
     const metadata = content.stems?.[stem]
     const bead = content.beads?.[content.assignments?.[stem]]
-    if (!metadata?.element || !metadata.nameZh || !metadata.nameEn || !bead?.name || !bead.meaning) {
+    if (!['金', '木', '水', '火', '土'].includes(metadata?.element) ||
+        typeof metadata.nameZh !== 'string' || !metadata.nameZh.trim() ||
+        typeof metadata.nameEn !== 'string' || !metadata.nameEn.trim() ||
+        typeof bead?.name !== 'string' || !bead.name.trim() ||
+        typeof bead.meaning !== 'string' || !bead.meaning.trim()) {
       throw new Error(`串珠资料不完整：${stem}`)
     }
   }
@@ -17,8 +21,12 @@ export function validateFortuneContent(content) {
 }
 
 export function getFortune(birthDate, content, today) {
+  return getFortuneForStem(calculateDayStem(birthDate, today), content)
+}
+
+export function getFortuneForStem(stem, content) {
   validateFortuneContent(content)
-  const stem = calculateDayStem(birthDate, today)
+  if (!STEMS.includes(stem)) throw new Error('Invalid day stem')
   const beadId = content.assignments[stem]
   return {
     stem,

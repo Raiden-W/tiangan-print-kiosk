@@ -1,6 +1,6 @@
 {
-  "version": "placeholder-1",
-  "mode": "placeholder",
+  "version": "elements-1",
+  "mode": "production",
   "stems": {
     "甲": { "element": "木", "nameZh": "甲木", "nameEn": "YANG WOOD" },
     "乙": { "element": "木", "nameZh": "乙木", "nameEn": "YIN WOOD" },
@@ -14,14 +14,14 @@
     "癸": { "element": "水", "nameZh": "癸水", "nameEn": "YIN WATER" }
   },
   "beads": {
-    "demo-bead": {
-      "name": "测试串珠 A",
-      "image": null,
-      "meaning": "此处为开发占位说明。正式串珠名称、图片、对应关系及文化寓意待业主提供；当前不代表正式推荐。"
-    }
+    "metal": { "name": "金元素串珠", "meaning": "传统五行中，土生金。\n米黄与天然石的质感呼应土的属性，\n寓意稳定、积累与支持。" },
+    "wood": { "name": "木元素串珠", "meaning": "木象征生长与舒展，\n寓意向上生长、保持好奇，\n在变化中找到自己的方向。" },
+    "water": { "name": "水元素串珠", "meaning": "水象征流动与包容，\n寓意灵活应变、从容前行，\n在流转中积蓄力量。" },
+    "fire": { "name": "火元素串珠", "meaning": "火象征热情与光亮，\n寓意勇敢表达、点燃灵感，\n让心中的热爱照亮前路。" },
+    "earth": { "name": "土元素串珠", "meaning": "土象征承载与安定，\n寓意脚踏实地、沉稳积累，\n在日常中收获安心与支持。" }
   },
   "assignments": {
-    "甲": "demo-bead", "乙": "demo-bead", "丙": "demo-bead", "丁": "demo-bead", "戊": "demo-bead",
-    "己": "demo-bead", "庚": "demo-bead", "辛": "demo-bead", "壬": "demo-bead", "癸": "demo-bead"
+    "甲": "wood", "乙": "wood", "丙": "fire", "丁": "fire", "戊": "earth",
+    "己": "earth", "庚": "metal", "辛": "metal", "壬": "water", "癸": "water"
   }
 }

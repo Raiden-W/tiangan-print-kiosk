@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import FloatingPanel from './FloatingPanel.jsx'
 import Keyboard from 'react-simple-keyboard'
 import { editNickname, limitNickname, nicknameCursor, nicknameLength, NICKNAME_LIMIT } from '../../shared/nickname.js'
 import { isPinyinPrefix, nicknameLayouts, pinyinCandidates } from './nicknameKeyboard.js'
@@ -13,8 +13,7 @@ const buttonAttributes = [
   ...Object.entries(display).map(([buttons, value]) => ({ attribute: 'aria-label', value, buttons })),
 ]
 
-export default function NicknameKeyboard({ value, onChange, onDismiss }) {
-  const dialog = useRef(null)
+export default function NicknameKeyboard({ value, onChange, onDismiss, anchor, label = '昵称', limit = NICKNAME_LIMIT }) {
   const input = useRef(null)
   const pendingCaret = useRef(null)
   const [language, setLanguage] = useState('zh')
@@ -26,11 +25,8 @@ export default function NicknameKeyboard({ value, onChange, onDismiss }) {
   const pages = Math.ceil(candidates.length / PAGE_SIZE)
 
   useEffect(() => {
-    const element = dialog.current
-    element.showModal()
     input.current.focus({ preventScroll: true })
     input.current.setSelectionRange(input.current.value.length, input.current.value.length)
-    return () => element.close()
   }, [])
 
   useEffect(() => {
@@ -42,9 +38,9 @@ export default function NicknameKeyboard({ value, onChange, onDismiss }) {
 
   function insert(text, backspace = false) {
     const element = input.current
-    const edit = editNickname(value, element.selectionStart, element.selectionEnd, text, backspace)
+    const edit = editNickname(value, element.selectionStart, element.selectionEnd, text, backspace, limit)
     if (!edit) {
-      setNotice(`昵称最多 ${NICKNAME_LIMIT} 个字符，可先删除或选择要替换的文字。`)
+      setNotice(`${label}最多 ${limit} 个字符，可先删除或选择要替换的文字。`)
       return false
     }
     pendingCaret.current = edit.caret
@@ -100,16 +96,15 @@ export default function NicknameKeyboard({ value, onChange, onDismiss }) {
     } else if (button === '{space}') insert(' ')
   }
 
-  function finish() {
+  function finish(dismiss) {
     if (pinyin) setNotice('请先选择候选字，或取消拼音后完成。')
-    else onDismiss()
+    else dismiss()
   }
 
-  return createPortal(
-    <dialog ref={dialog} className="nickname-keyboard" aria-labelledby="nickname-keyboard-title"
-      onCancel={(event) => { event.preventDefault(); onDismiss() }}>
+  return <FloatingPanel className="nickname-keyboard" anchor={anchor} labelledBy="nickname-keyboard-title" onDismiss={onDismiss}>
+    {(dismiss) => <>
       <div className="keyboard-toolbar">
-        <h2 id="nickname-keyboard-title">输入昵称</h2>
+        <h2 id="nickname-keyboard-title">输入{label}</h2>
         <div className="keyboard-languages" role="group" aria-label="输入语言">
           <button type="button" aria-pressed={language === 'zh'} onClick={() => {
             if (pinyin) { setNotice('请先选字或取消拼音，再切换语言。'); return }
@@ -120,21 +115,21 @@ export default function NicknameKeyboard({ value, onChange, onDismiss }) {
             setLanguage('en'); setLayout('default'); setNotice(''); input.current.focus({ preventScroll: true })
           }}>English</button>
         </div>
-        <button type="button" className="keyboard-done" onClick={finish}>完成</button>
+        <button type="button" className="keyboard-done" onClick={() => finish(dismiss)}>完成</button>
       </div>
-      <label className="keyboard-input-label" htmlFor="keyboard-nickname">编辑昵称 <span>{nicknameLength(value)} / {NICKNAME_LIMIT}</span></label>
-      <input ref={input} id="keyboard-nickname" value={value} inputMode="none" autoComplete="off" spellCheck={false}
-        aria-describedby="keyboard-status" placeholder="怎么称呼你？"
+      <label className="keyboard-input-label" htmlFor="keyboard-nickname">编辑{label} <span>{nicknameLength(value)} / {limit}</span></label>
+      <input ref={input} data-autofocus id="keyboard-nickname" value={value} inputMode="none" autoComplete="off" spellCheck={false}
+        aria-describedby="keyboard-status" placeholder={label === '昵称' ? '怎么称呼你？' : '例如：中国 上海 / Paris, France'}
         onChange={(event) => {
           resetPinyin()
-          onChange(event.nativeEvent.isComposing ? event.target.value : limitNickname(event.target.value))
+          onChange(event.nativeEvent.isComposing ? event.target.value : limitNickname(event.target.value, limit))
         }}
-        onCompositionEnd={(event) => onChange(limitNickname(event.currentTarget.value))}
+        onCompositionEnd={(event) => onChange(limitNickname(event.currentTarget.value, limit))}
         onKeyDown={(event) => {
           if (event.nativeEvent.isComposing || event.keyCode === 229) return
           if (pinyin && event.key === 'Backspace') { event.preventDefault(); press('{bksp}'); return }
           if (pinyin && event.key === ' ') { event.preventDefault(); press('{space}'); return }
-          if (event.key === 'Enter') { event.preventDefault(); if (pinyin && candidates.length) choose(candidates[0]); else finish() }
+          if (event.key === 'Enter') { event.preventDefault(); if (pinyin && candidates.length) choose(candidates[0]); else finish(dismiss) }
         }} />
       <div className="keyboard-composition">
         <span aria-label="待选字拼音">{pinyin || (language === 'zh' ? '输入单字拼音，选字后继续；ü 用 v' : 'English · 使用 ⇧ 切换大小写')}</span>
@@ -152,7 +147,7 @@ export default function NicknameKeyboard({ value, onChange, onDismiss }) {
         buttonTheme={[{ class: 'keyboard-key-function', buttons: '{shift} {bksp} {numbers} {letters} {left} {right} {clear}' }]}
         buttonAttributes={buttonAttributes} useButtonTag preventMouseDownDefault disableButtonHold
         disableCaretPositioning enableLayoutCandidates={false} inputPattern={/^$/} onKeyPress={press} />
-      <p className="keyboard-status" id="keyboard-status" role="status">{notice || '昵称仅用于本次体验；退出或闲置后清空。'}</p>
-    </dialog>, document.body,
-  )
+      <p className="keyboard-status" id="keyboard-status" role="status">{notice}</p>
+      </>}
+    </FloatingPanel>
 }
