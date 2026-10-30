@@ -29,9 +29,11 @@
 .element-diagram { position: absolute; left: 290px; top: 566px; width: 500px; height: 550px; }
 .element-connections { position: absolute; left: 35px; top: 65px; width: 430px; height: 414px; object-fit: contain; pointer-events: none; }
 .element-relation { position: absolute; font-size: 31px; line-height: 1; transform: translate(-50%, -50%); }
-.element-node { position: absolute; width: 112px; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.element-node .element-icon { width: 96px; height: 96px; }
-.element-percentage { font-size: 27px; line-height: 1; }
+.element-node { position: absolute; width: 112px; height: 127px; transform: translate(-50%, -50%); }
+.element-node .element-icon { position: absolute; top: 0; left: 8px; width: 96px; height: 96px; }
+.day-element-label { position: absolute; top: 99px; left: 0; width: 100%; text-align: center; font-size: 21px; line-height: 1; }
+.element-percentage { position: absolute; top: 100px; left: 0; width: 100%; text-align: center; font-size: 27px; line-height: 1; }
+.element-node-day .element-percentage { top: 127px; }
 .stem-name { position: absolute; top: 1156px; left: 0; width: 100%; text-align: center; }
 .stem-name p:first-child { font-size: 43px; line-height: 1.2; }
 .stem-name p:last-child { margin-top: 5px; font-size: 43px; line-height: 1.15; }

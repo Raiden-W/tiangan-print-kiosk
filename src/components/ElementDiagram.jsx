@@ -12,12 +12,13 @@ const labels = [
   ['克', 205, 166], ['克', 334, 207], ['克', 350, 363], ['克', 225, 436], ['克', 131, 301],
 ]
 
-export default function ElementDiagram({ percentages, dominantElement }) {
+export default function ElementDiagram({ percentages, dayElement }) {
   return <div className="element-diagram" aria-label="全盘五行能量占比">
     <img className="element-connections" src="./ui/elements/circle arrows.png" alt="" />
     {labels.map(([label, x, y], i) => <span className="element-relation" key={i} style={{ left: x, top: y }} aria-hidden="true">{label}</span>)}
-    {nodes.map((node) => <div key={node.key} className="element-node" style={{ left: node.x, top: node.y }}>
-      <ElementIcon element={node.label} className={dominantElement === node.label ? 'day-element' : ''} />
+    {nodes.map((node) => <div key={node.key} className={`element-node${dayElement === node.label ? ' element-node-day' : ''}`} style={{ left: node.x, top: node.y }}>
+      <ElementIcon element={node.label} className={dayElement === node.label ? 'day-element' : ''} />
+      {dayElement === node.label && <span className="day-element-label">日主</span>}
       <span className="element-percentage">{percentages[node.key]}%</span>
     </div>)}
   </div>

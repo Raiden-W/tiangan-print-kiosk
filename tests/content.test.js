@@ -13,12 +13,13 @@ test('external JSON reloads edited text and rejects missing, broken or incomplet
     const source = JSON.parse(readFileSync(new URL('../content/fortune.json', import.meta.url), 'utf8'))
     writeFileSync(filename, JSON.stringify(source))
     const first = loadFortuneContent(filename)
-    source.beads.metal.meaning = '修改后的金元素寓意'
+    source.meanings['辛'] = '修改后的辛金寓意'
     writeFileSync(filename, JSON.stringify(source))
     const restarted = loadFortuneContent(filename)
-    assert.notEqual(first.beads.metal.meaning, restarted.beads.metal.meaning)
-    assert.equal(getFortuneForStem('辛', restarted).bead.meaning, '修改后的金元素寓意')
-    source.beads.metal.meaning = ''
+    assert.notEqual(first.meanings['辛'], restarted.meanings['辛'])
+    assert.equal(getFortuneForStem('辛', restarted).bead.meaning, '修改后的辛金寓意')
+    assert.equal(getFortuneForStem('庚', restarted).bead.meaning, source.meanings['庚'])
+    source.meanings['辛'] = ''
     writeFileSync(filename, JSON.stringify(source))
     assert.throws(() => loadFortuneContent(filename), /内容配置/)
     writeFileSync(filename, '{broken')
