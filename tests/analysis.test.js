@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { randomUUID } from 'node:crypto'
-import { analysisRequest, parseAnalysis, SYSTEM_PROMPT, ticketFromSnapshot, alignPercentagesToDayElement } from '../shared/analysis.js'
+import { analysisRequest, parseAnalysis, SYSTEM_PROMPT, ticketFromSnapshot } from '../shared/analysis.js'
 import { createAnalysisController } from '../electron/analysis.js'
 import { normalizeParticipant } from '../shared/participant.js'
 
@@ -26,28 +26,16 @@ test('request has a fixed low-variation configuration and treats all input as da
   assert.deepEqual(normalizeParticipant({ ...participant, injected: 'not forwarded' }), participant)
 })
 
-test('day element swaps with the first maximum without changing input, integers or total', () => {
-  const original = { wood: 30, fire: 30, earth: 15, metal: 10, water: 15 }
-  const corrected = alignPercentagesToDayElement(original, '金')
-  assert.deepEqual(corrected, { wood: 10, fire: 30, earth: 15, metal: 30, water: 15 })
-  assert.equal(original.metal, 10)
-  assert.equal(Object.values(corrected).reduce((a, b) => a + b), 100)
-  assert.ok(Object.values(corrected).every(Number.isInteger))
-  assert.deepEqual(alignPercentagesToDayElement(corrected, '金'), corrected)
-  assert.deepEqual(alignPercentagesToDayElement(original, '木'), original)
-  assert.deepEqual(alignPercentagesToDayElement(original, '火'), original)
-})
-
-test('main-process snapshot holds corrected percentages while preserving the AI day stem', async () => {
+test('main-process snapshot preserves AI percentages when the day element is not highest', async () => {
+  const aiPercentages = { wood: 40, fire: 12, earth: 20, metal: 14, water: 14 }
   const controller = createAnalysisController({ apiKey: 'test-only', fetchImpl: async () => ({
     ok: true, status: 200, json: async () => completion(JSON.stringify({ ...data,
-      wuxing_percentages: { wood: 40, fire: 12, earth: 20, metal: 14, water: 14 },
+      wuxing_percentages: aiPercentages,
     })),
   }) })
   const snapshot = await controller.analyze(randomUUID(), participant)
   assert.equal(snapshot.result.nameZh, '辛金')
-  assert.equal(snapshot.result.percentages.metal, 40)
-  assert.equal(snapshot.result.percentages.wood, 14)
+  assert.deepEqual(snapshot.result.percentages, aiPercentages)
   assert.deepEqual(controller.getSnapshot(snapshot.id).result, snapshot.result)
   controller.clear()
 })

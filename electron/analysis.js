@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { normalizeParticipant } from '../shared/participant.js'
-import { analysisRequest, parseAnalysis, PROMPT_VERSION, alignPercentagesToDayElement } from '../shared/analysis.js'
+import { analysisRequest, parseAnalysis, PROMPT_VERSION } from '../shared/analysis.js'
 import { getFortuneForStem } from '../shared/fortune.js'
 import { loadFortuneContent } from './content.js'
 
@@ -72,7 +72,7 @@ export function createAnalysisController({
         const fortune = getFortuneForStem(data.day_stem[0], content)
         snapshot = {
           id: randomUUID(), requestId, participant,
-          result: { ...fortune, percentages: alignPercentagesToDayElement(data.wuxing_percentages, fortune.element) },
+          result: { ...fortune, percentages: data.wuxing_percentages },
           promptVersion: PROMPT_VERSION, model,
         }
         return structuredClone(snapshot)

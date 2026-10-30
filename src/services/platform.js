@@ -1,5 +1,5 @@
 import { getFortuneForStem, validateFortuneContent } from '../../shared/fortune.js'
-import { ticketFromSnapshot, alignPercentagesToDayElement } from '../../shared/analysis.js'
+import { ticketFromSnapshot } from '../../shared/analysis.js'
 
 let browserContent
 
@@ -24,7 +24,7 @@ export function analyzeBirthInfo(requestId, participant) {
   const fortune = getFortuneForStem('辛', browserContent)
   return Promise.resolve({
     ok: true, resultId: requestId,
-    result: { ...fortune, percentages: alignPercentagesToDayElement({ wood: 18, fire: 12, earth: 26, metal: 30, water: 14 }, fortune.element) },
+    result: { ...fortune, percentages: { wood: 40, fire: 12, earth: 20, metal: 14, water: 14 } },
   })
 }
 

@@ -50,15 +50,3 @@ export function ticketFromSnapshot(snapshot) {
     placeholder: result.placeholder,
   }
 }
-
-const elementKeys = { 木: 'wood', 火: 'fire', 土: 'earth', 金: 'metal', 水: 'water' }
-
-// Presentation rule: preserve all five values and their total, prioritizing the day element.
-export function alignPercentagesToDayElement(percentages, element) {
-  const aligned = { ...percentages }
-  const key = elementKeys[element]
-  if (!key) throw new Error('Invalid day element')
-  const largest = ELEMENTS.reduce((best, candidate) => aligned[candidate] > aligned[best] ? candidate : best)
-  if (aligned[key] < aligned[largest]) [aligned[key], aligned[largest]] = [aligned[largest], aligned[key]]
-  return aligned
-}
