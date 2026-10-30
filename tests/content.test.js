@@ -17,8 +17,8 @@ test('external JSON reloads edited text and rejects missing, broken or incomplet
     writeFileSync(filename, JSON.stringify(source))
     const restarted = loadFortuneContent(filename)
     assert.notEqual(first.meanings['辛'], restarted.meanings['辛'])
-    assert.equal(getFortuneForStem('辛', restarted).bead.meaning, '修改后的辛金寓意')
-    assert.equal(getFortuneForStem('庚', restarted).bead.meaning, source.meanings['庚'])
+    assert.equal(getFortuneForStem('辛', restarted).meaning, '修改后的辛金寓意')
+    assert.equal(getFortuneForStem('庚', restarted).meaning, source.meanings['庚'])
     source.meanings['辛'] = ''
     writeFileSync(filename, JSON.stringify(source))
     assert.throws(() => loadFortuneContent(filename), /内容配置/)

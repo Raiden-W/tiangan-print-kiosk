@@ -46,7 +46,7 @@ export function ticketFromSnapshot(snapshot) {
   const result = snapshot.result
   return {
     name: snapshot.participant.nickname, nameZh: result.nameZh, nameEn: result.nameEn,
-    element: result.element, beadName: result.bead.name, meaning: result.bead.meaning,
+    element: result.element, meaning: result.meaning,
     placeholder: result.placeholder,
   }
 }

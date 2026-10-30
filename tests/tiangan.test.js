@@ -35,26 +35,19 @@ test('day-stem output is invariant across process TZ settings', () => {
   }
 })
 
-test('all ten stems have distinct meanings while sharing five bead names', () => {
+test('all ten stems have distinct meanings', () => {
   assert.equal(validateFortuneContent(content), true)
-  assert.equal(Object.keys(content.assignments).length, 10)
-  assert.equal(new Set(Object.values(content.assignments)).size, 5)
   assert.equal(Object.keys(content.meanings).length, 10)
-  assert.equal(new Set(STEMS.map((stem) => getFortuneForStem(stem, content).bead.meaning)).size, 10)
+  assert.equal(new Set(STEMS.map((stem) => getFortuneForStem(stem, content).meaning)).size, 10)
   for (let index = 0; index < STEMS.length; index += 2) {
-    assert.equal(content.assignments[STEMS[index]], content.assignments[STEMS[index + 1]])
-    assert.notEqual(getFortuneForStem(STEMS[index], content).bead.meaning,
-      getFortuneForStem(STEMS[index + 1], content).bead.meaning)
+    assert.notEqual(getFortuneForStem(STEMS[index], content).meaning,
+      getFortuneForStem(STEMS[index + 1], content).meaning)
   }
   const result = getFortune('1986-05-29', content, TODAY)
   assert.equal(result.nameZh, '癸水')
   assert.equal(result.nameEn, 'YIN WATER')
   assert.equal(result.placeholder, false)
-  assert.equal(result.bead.name, '水元素串珠')
-  assert.equal(result.bead.meaning, content.meanings['癸'])
-  const invalid = structuredClone(content)
-  invalid.assignments['辛'] = 'missing-bead'
-  assert.throws(() => validateFortuneContent(invalid), /辛/)
+  assert.equal(result.meaning, content.meanings['癸'])
   const missingMeaning = structuredClone(content)
   delete missingMeaning.meanings['辛']
   assert.throws(() => validateFortuneContent(missingMeaning), /辛/)

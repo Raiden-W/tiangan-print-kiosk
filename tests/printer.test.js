@@ -12,7 +12,7 @@ test('print snapshot is shared, duplicate submissions are locked before printer 
   const resultId = randomUUID()
   const snapshot = {
     participant: { nickname: '🪨'.repeat(50) }, promptVersion: 'test-1',
-    result: { nameZh: '辛金', nameEn: 'YIN METAL', element: '金', bead: { name: '测试串珠', meaning: '测试说明' }, placeholder: true, contentVersion: 'test-1' },
+    result: { nameZh: '辛金', nameEn: 'YIN METAL', element: '金', meaning: '测试说明', placeholder: true, contentVersion: 'test-1' },
   }
   let resolvePrinters
   let printCallback
